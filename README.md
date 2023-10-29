@@ -8,6 +8,15 @@ This simple portal system is meant as an educational example on how you can crea
 
 ![Demo](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/demo.gif)
 
+### About the code
+
+This repository contains a small demo project which shows the portals in action. You can move around using WASD or the arrow keys, and look around using the mouse. A raycaster will show you which crates you hit as you move the mouse cursor.
+
+If you want to use the portals in your own project, you only need these two files:
+
+`src/shaders/portal.gdshader`
+`src/scripts/portal.gd`
+
 ### About Modelling Portals
 
 First you need to model some portal meshes, or just use a plane or a box.
