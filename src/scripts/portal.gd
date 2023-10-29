@@ -134,7 +134,7 @@ func _process(delta:float) -> void:
     # Calculate the distance from the exit camera to the nearest point on the exit portal's bounding box
     var distance_to_near_plane_center:float = exit_portal.get_nearest_aabb_distance(_exit_camera.global_position)
 
-    # Determine the viewport's aspect ratio. The aspect ratio calculation is inverted based on keep_aspect
+    # Determine the viewport's aspect ratio. The aspect ratio calculation is inverted based on keep_aspect.
     var aspect_ratio:float = float(_viewport.size.x) / _viewport.size.y \
         if _exit_camera.keep_aspect == 1 else float(_viewport.size.y) / _viewport.size.x
 
