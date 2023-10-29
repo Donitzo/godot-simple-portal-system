@@ -1,6 +1,6 @@
 # Godot Simple Portal System
 
-![Demo screenshot](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/demo.png)
+![Demo screenshot](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/screenshot.png)
 
 ## Description
 
