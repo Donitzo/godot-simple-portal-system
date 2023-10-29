@@ -6,7 +6,7 @@ A Simple Portal System for Godot 4 (and 3 with a little work). Portals hopefully
 
 This simple portal system is meant as an educational example on how you can create portals in Godot. Consider it a starting point.
 
-# ![Demo](blob:https://github.com/83d68a60-bf40-4879-9fce-49b0fa0197ff)
+![Demo](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/demo.gif)
 
 ### About Modelling Portals
 
@@ -16,7 +16,7 @@ First you need to model some portal meshes, or just use a plane or a box.
 - To make a portal face another way, rotate the model object, not the mesh.
 - The raycasting works by treating the portal as a flat surface centered at Z=0 in Godot. Flat portals work best in raycasting.
 
-# ![Mesh orientation](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/mesh_orientation.png)
+![Mesh orientation](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/mesh_orientation.png)
 
 ### Setup Instructions
 
