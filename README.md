@@ -29,7 +29,7 @@ If you want to use the portals in your own project, you only need these two file
 
 First you need to model some portal meshes, or just use a plane or a box.
 
-- The portal model surface should face -Y in Blender and -Z in Godot.
+- The portal model surface should face -Y in Blender and +Z in Godot.
 - To make a portal face another way, rotate the model object, not the mesh.
 - The raycasting works by treating the portal as a flat surface centered at Z=0 in Godot. Flat portals work best in raycasting.
 
