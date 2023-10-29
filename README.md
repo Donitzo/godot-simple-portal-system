@@ -83,7 +83,7 @@ var callable:Callable = Callable(self, "_handle_raycast")
 Then, use the built-in raycasting function as follows:
 
 ```gd
-Portal.raycast(get_tree(), from_position, direction, callable, [max_distance=INF], [max_recursions=2])
+Portal.raycast(get_tree(), from_position, direction, callable, [max_distance=INF], [max_recursions=2], [ignore_backside=true])
 ```
 
 By default `max_recursions` is 2, meaning the ray may pass two portals.
