@@ -6,7 +6,7 @@ A Simple Portal System for Godot 4 (and 3 with a little work). Portals hopefully
 
 This simple portal system is meant as an educational example on how you can create portals in Godot. Consider it a starting point.
 
-# ![Demo](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/demo.gif)
+# ![Demo](blob:https://github.com/83d68a60-bf40-4879-9fce-49b0fa0197ff)
 
 ### About Modelling Portals
 
