@@ -102,66 +102,6 @@ viewport_path = NodePath("Player/PipViewport1")
 [sub_resource type="ViewportTexture" id="ViewportTexture_2lqqg"]
 viewport_path = NodePath("PipViewport2")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0u686"]
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_10wej"]
-_surfaces = [{
-"aabb": AABB(-1.02429, -1.3, 0, 2.04857, 2.60001, 1e-05),
-"format": 4097,
-"index_count": 6,
-"index_data": PackedByteArray(3, 0, 0, 0, 1, 0, 3, 0, 2, 0, 0, 0),
-"primitive": 3,
-"vertex_count": 4,
-"vertex_data": PackedByteArray(214, 27, 131, 191, 100, 102, 166, 63, 0, 0, 0, 128, 210, 27, 131, 191, 102, 102, 166, 191, 0, 0, 0, 128, 214, 27, 131, 63, 102, 102, 166, 63, 0, 0, 0, 128, 210, 27, 131, 63, 102, 102, 166, 191, 0, 0, 0, 128)
-}]
-blend_shape_mode = 0
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_75i3l"]
-resource_name = "room_Plane_001"
-_surfaces = [{
-"aabb": AABB(-1.02429, -1.3, 0, 2.04857, 2.60001, 1e-05),
-"attribute_data": PackedByteArray(0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63),
-"format": 4119,
-"index_count": 6,
-"index_data": PackedByteArray(3, 0, 0, 0, 1, 0, 3, 0, 2, 0, 0, 0),
-"material": SubResource("StandardMaterial3D_0u686"),
-"primitive": 3,
-"vertex_count": 4,
-"vertex_data": PackedByteArray(214, 27, 131, 191, 100, 102, 166, 63, 0, 0, 0, 128, 255, 255, 255, 255, 255, 255, 255, 191, 210, 27, 131, 191, 102, 102, 166, 191, 0, 0, 0, 128, 255, 255, 255, 255, 255, 255, 255, 191, 214, 27, 131, 63, 102, 102, 166, 63, 0, 0, 0, 128, 255, 255, 255, 255, 255, 255, 255, 191, 210, 27, 131, 63, 102, 102, 166, 191, 0, 0, 0, 128, 255, 255, 255, 255, 255, 255, 255, 191)
-}]
-blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_10wej")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nwlof"]
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_i6bcp"]
-_surfaces = [{
-"aabb": AABB(-1.02429, -1.3, 0, 2.04857, 2.60001, 1e-05),
-"format": 4097,
-"index_count": 6,
-"index_data": PackedByteArray(3, 0, 0, 0, 1, 0, 3, 0, 2, 0, 0, 0),
-"primitive": 3,
-"vertex_count": 4,
-"vertex_data": PackedByteArray(214, 27, 131, 191, 100, 102, 166, 63, 0, 0, 0, 128, 210, 27, 131, 191, 102, 102, 166, 191, 0, 0, 0, 128, 214, 27, 131, 63, 102, 102, 166, 63, 0, 0, 0, 128, 210, 27, 131, 63, 102, 102, 166, 191, 0, 0, 0, 128)
-}]
-blend_shape_mode = 0
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_o7hn5"]
-resource_name = "room_Plane_002"
-_surfaces = [{
-"aabb": AABB(-1.02429, -1.3, 0, 2.04857, 2.60001, 1e-05),
-"attribute_data": PackedByteArray(0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63),
-"format": 4119,
-"index_count": 6,
-"index_data": PackedByteArray(3, 0, 0, 0, 1, 0, 3, 0, 2, 0, 0, 0),
-"material": SubResource("StandardMaterial3D_nwlof"),
-"primitive": 3,
-"vertex_count": 4,
-"vertex_data": PackedByteArray(214, 27, 131, 191, 100, 102, 166, 63, 0, 0, 0, 128, 255, 255, 255, 255, 255, 255, 255, 191, 210, 27, 131, 191, 102, 102, 166, 191, 0, 0, 0, 128, 255, 255, 255, 255, 255, 255, 255, 191, 214, 27, 131, 63, 102, 102, 166, 63, 0, 0, 0, 128, 255, 255, 255, 255, 255, 255, 255, 191, 210, 27, 131, 63, 102, 102, 166, 191, 0, 0, 0, 128, 255, 255, 255, 255, 255, 255, 255, 191)
-}]
-blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_i6bcp")
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o028r"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_36i4e"]
@@ -288,6 +228,66 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_54x5w")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k7ub3"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_qp314"]
+_surfaces = [{
+"aabb": AABB(-1.02429, -1.3, 0, 2.04857, 2.60001, 1e-05),
+"format": 4097,
+"index_count": 6,
+"index_data": PackedByteArray(3, 0, 1, 0, 0, 0, 3, 0, 0, 0, 2, 0),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(214, 27, 131, 191, 100, 102, 166, 63, 0, 0, 0, 128, 210, 27, 131, 191, 102, 102, 166, 191, 0, 0, 0, 128, 214, 27, 131, 63, 102, 102, 166, 63, 0, 0, 0, 128, 210, 27, 131, 63, 102, 102, 166, 191, 0, 0, 0, 128)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_elhom"]
+resource_name = "room_Plane_001"
+_surfaces = [{
+"aabb": AABB(-1.02429, -1.3, 0, 2.04857, 2.60001, 1e-05),
+"attribute_data": PackedByteArray(0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63),
+"format": 4119,
+"index_count": 6,
+"index_data": PackedByteArray(3, 0, 1, 0, 0, 0, 3, 0, 0, 0, 2, 0),
+"material": SubResource("StandardMaterial3D_k7ub3"),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(214, 27, 131, 191, 100, 102, 166, 63, 0, 0, 0, 128, 255, 127, 255, 127, 255, 255, 255, 63, 210, 27, 131, 191, 102, 102, 166, 191, 0, 0, 0, 128, 255, 127, 255, 127, 255, 255, 255, 63, 214, 27, 131, 63, 102, 102, 166, 63, 0, 0, 0, 128, 255, 127, 255, 127, 255, 255, 255, 63, 210, 27, 131, 63, 102, 102, 166, 191, 0, 0, 0, 128, 255, 127, 255, 127, 255, 255, 255, 63)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_qp314")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0cgtj"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_klteo"]
+_surfaces = [{
+"aabb": AABB(-1.02429, -1.3, 0, 2.04857, 2.60001, 1e-05),
+"format": 4097,
+"index_count": 6,
+"index_data": PackedByteArray(3, 0, 1, 0, 0, 0, 3, 0, 0, 0, 2, 0),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(214, 27, 131, 191, 100, 102, 166, 63, 0, 0, 0, 128, 210, 27, 131, 191, 102, 102, 166, 191, 0, 0, 0, 128, 214, 27, 131, 63, 102, 102, 166, 63, 0, 0, 0, 128, 210, 27, 131, 63, 102, 102, 166, 191, 0, 0, 0, 128)
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_essa0"]
+resource_name = "room_Plane_002"
+_surfaces = [{
+"aabb": AABB(-1.02429, -1.3, 0, 2.04857, 2.60001, 1e-05),
+"attribute_data": PackedByteArray(0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63),
+"format": 4119,
+"index_count": 6,
+"index_data": PackedByteArray(3, 0, 1, 0, 0, 0, 3, 0, 0, 0, 2, 0),
+"material": SubResource("StandardMaterial3D_0cgtj"),
+"primitive": 3,
+"vertex_count": 4,
+"vertex_data": PackedByteArray(214, 27, 131, 191, 100, 102, 166, 63, 0, 0, 0, 128, 255, 127, 255, 127, 255, 255, 255, 63, 210, 27, 131, 191, 102, 102, 166, 191, 0, 0, 0, 128, 255, 127, 255, 127, 255, 255, 255, 63, 214, 27, 131, 63, 102, 102, 166, 63, 0, 0, 0, 128, 255, 127, 255, 127, 255, 255, 255, 63, 210, 27, 131, 63, 102, 102, 166, 191, 0, 0, 0, 128, 255, 127, 255, 127, 255, 255, 255, 63)
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_klteo")
+
 [node name="Node3D" type="Node3D"]
 
 [node name="Room" type="MeshInstance3D" parent="."]
@@ -350,30 +350,6 @@ omni_range = 30.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 16)
 light_energy = 5.966
 omni_range = 30.0
-
-[node name="CorridorPortalA" type="MeshInstance3D" parent="." node_paths=PackedStringArray("main_camera", "exit_portal")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 7.15)
-mesh = SubResource("ArrayMesh_75i3l")
-skeleton = NodePath("")
-script = ExtResource("4_tlnos")
-disable_viewport_distance = 13.0
-fade_out_distance_max = 12.0
-fade_out_distance_min = 10.0
-fade_out_color = Color(0, 0, 0, 1)
-main_camera = NodePath("../Player/Camera")
-exit_portal = NodePath("../CorridorPortalB")
-
-[node name="CorridorPortalB" type="MeshInstance3D" parent="." node_paths=PackedStringArray("main_camera", "exit_portal")]
-transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 1.3, -7.15)
-mesh = SubResource("ArrayMesh_o7hn5")
-skeleton = NodePath("")
-script = ExtResource("4_tlnos")
-disable_viewport_distance = 13.0
-fade_out_distance_max = 12.0
-fade_out_distance_min = 10.0
-fade_out_color = Color(0, 0, 0, 1)
-main_camera = NodePath("../Player/Camera")
-exit_portal = NodePath("../CorridorPortalA")
 
 [node name="HolePortal" type="MeshInstance3D" parent="." node_paths=PackedStringArray("main_camera", "exit_portal")]
 transform = Transform3D(1.94707e-07, 0, -1, 0, 1, 0, 1, 0, 1.94707e-07, 5.31727, 1.55625, 0)
@@ -599,3 +575,25 @@ skeleton = NodePath("")
 script = ExtResource("4_tlnos")
 fade_out_color = Color(0, 0, 0, 1)
 exit_portal = NodePath("../Crack1")
+
+[node name="CorridorPortalA" type="MeshInstance3D" parent="." node_paths=PackedStringArray("exit_portal")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000144124, 1.3, -7.15)
+mesh = SubResource("ArrayMesh_elhom")
+skeleton = NodePath("")
+script = ExtResource("4_tlnos")
+disable_viewport_distance = 13.0
+fade_out_distance_max = 12.0
+fade_out_distance_min = 10.0
+fade_out_color = Color(0, 0, 0, 1)
+exit_portal = NodePath("../CorridorPortalB")
+
+[node name="CorridorPortalB" type="MeshInstance3D" parent="." node_paths=PackedStringArray("exit_portal")]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, -0.000144124, 1.3, 7.15)
+mesh = SubResource("ArrayMesh_essa0")
+skeleton = NodePath("")
+script = ExtResource("4_tlnos")
+disable_viewport_distance = 13.0
+fade_out_distance_max = 12.0
+fade_out_distance_min = 10.0
+fade_out_color = Color(0, 0, 0, 1)
+exit_portal = NodePath("../CorridorPortalA")
