@@ -47,13 +47,13 @@ const _EXIT_CAMERA_NEAR_MIN:float = 0.01
 ## The exit portal. Leave unset to use this portal as an exit only.
 @export var exit_portal:Portal
 
-# The viewport rendering the portal surface.
+# The viewport rendering the portal surface
 var _viewport:SubViewport
 
-# The exit camera copies the main camera's position relative to the exit portal.
+# The exit camera copies the main camera's position relative to the exit portal
 var _exit_camera:Camera3D
 
-# The number of seconds until the viewport updates its size.
+# The number of seconds until the viewport updates its size
 var _seconds_until_resize:float
 
 func _ready() -> void:
