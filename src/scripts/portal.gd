@@ -243,7 +243,7 @@ static func raycast(tree:SceneTree, from:Vector3, dir:Vector3, handle_raycast:Ca
             var t:float = -local_from.z / local_dir.z
             
             # Is the intersection behind the start position?
-            if t <= 0:
+            if t < 0:
                 continue
 
             # Check if the ray hit inside the portal bounding box (ignoring Z)
