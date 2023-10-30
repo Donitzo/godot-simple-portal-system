@@ -43,7 +43,7 @@ First you need to model some portal meshes, or just use a plane or a box.
 
 1. Attach the `portal.gd` script to two `MeshInstance3D` nodes that represent your portal surfaces.
 2. Establish a connection between the two portals: Assign one portal to the `exit_portal` property of the other portal. For a one-way portal, leave one portal disconnected.
-3. Set your primary camera to the `main_camera` property. If left unset, the portal defaults to using the primary camera.
+3. Set your primary camera to the `main_camera` property. If left unset, the portal will default to the primary camera if one exists.
 4. Define the fading range for the portal using `fade_out_distance_max` and `fade_out_distance_min`. Fades to `fade_out_color`.
 5. Define the `disable_viewport_distance` for portal rendering. Put the value slightly above `fade_out_distance_max` to ensure the portal fades out completely before disabling itself.
 6. Define the `exit_scale` to adjust the exit portal's view scale. Imagine, for instance, a large door leading to a small door.
@@ -52,7 +52,7 @@ First you need to model some portal meshes, or just use a plane or a box.
 
 ## Advanced Usage
 
-These functions help in transitioning between the portal entrance and exit:
+These functions aid in transitioning between the portal entrance and exit frames of reference:
 
 - `real_to_exit_transform(real:Transform3D) -> Transform3D`
 - `real_to_exit_position(real:Vector3) -> Vector3`
@@ -61,7 +61,7 @@ These functions help in transitioning between the portal entrance and exit:
 These are useful when you manipulate portal-associated objects. For instance, these functions would allow you to position a cloned spotlight at the exit portal:
 
 ```gd
-clone_spotlight.global_transform = portal.real_to_exit_transform(spotlight.global_transform)
+clone_spotlight.global_transform = portal.real_to_exit_transform(real_spotlight.global_transform)
 ```
 
 > **Note**: Portals currently do not nest (ie, you can't see through two portals at once). To nest portals you'd have to update the exit_camera position in-between draw calls, or figure out a way to change the camera view matrix in-between rendering viewports. That is beyond the scope of this simple system, but if you got some nice ideas how to implement these things in godot, please [open an issue](https://github.com/Donitzo/godot-simple-portal-system/issues).
@@ -90,7 +90,7 @@ Portal.raycast(get_tree(), from_position, direction, callable, [max_distance=INF
 
 By default `max_recursions` is 2, meaning the ray may pass two portals.
 
-`_handle_raycast` is always invoked at least once for the original ray. The `segment_distance` is `INF` if no portal was hit, or the distance to the next portal if a portal was hit. The function is invoked once more each time the ray recursively passes through another portal. A ray can be prematurely interrupted if `_handle_raycast` returns true, or if it hits the `max_recursions` limit. Return true if for example the current ray segment (within `segment_distance`) was blocked by something.
+`_handle_raycast` is always invoked at least once for the original ray. The `segment_distance` is `INF` if no portal was hit, or the distance to the hit portal. The function is invoked once more each time the ray recursively passes through another portal. A ray can be prematurely interrupted if `_handle_raycast` returns true, or if it hits the `max_recursions` limit. Return true if for example the current ray segment (within `segment_distance`) was blocked by something.
 
 ## Feedback & Bug Reports
 
