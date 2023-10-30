@@ -70,7 +70,7 @@ clone_spotlight.global_transform = portal.real_to_exit_transform(real_spotlight.
 
 Raycasting through portals can be complex. To simplify this, a built-in raycasting function is provided.
 
-Define a function with this signature:
+Define a function with this signature, in which you do your own raycasting against non-portal objects:
 
 ```gd
 func _handle_raycast(from:Vector3, dir:Vector3, segment_distance:float, recursive_distance:float, recursions:int) -> bool:
