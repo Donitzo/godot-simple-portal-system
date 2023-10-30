@@ -149,7 +149,7 @@ func _process(delta:float) -> void:
     var near_half_size_b:float = near_half_size_a * aspect_ratio
     var near_half_diagonal_length:float = sqrt(near_half_size_a ** 2 + near_half_size_b ** 2)
 
-    # Calculate the distance from the camera to the corner of the near clipping plane.
+    # Calculate the distance from the camera to the corner of the near clipping plane
     var distance_to_near_plane_corner:float = sqrt(distance_to_near_plane_center ** 2 + near_half_diagonal_length ** 2)
     var corner_to_center_difference:float = distance_to_near_plane_corner - distance_to_near_plane_center
 
