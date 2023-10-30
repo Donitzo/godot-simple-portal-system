@@ -64,7 +64,7 @@ These are useful when you manipulate portal-associated objects. For instance, th
 clone_spotlight.global_transform = portal.real_to_exit_transform(real_spotlight.global_transform)
 ```
 
-This code can also be used to teleport an object trough the portal. Alternatively use `real_to_exit_position` if you only want to change the global position of your object.
+This code can also be used to teleport an object to the exit portal. Alternatively use `real_to_exit_position` if you only want to change the global position of your object.
 
 > **Note**: Portals currently do not nest (ie, you can't see through two portals at once). To nest portals you'd have to update the exit_camera position in-between draw calls, or figure out a way to change the camera view matrix in-between rendering viewports. That is beyond the scope of this simple system, but if you got some nice ideas how to implement these things in godot, please [open an issue](https://github.com/Donitzo/godot-simple-portal-system/issues).
 
