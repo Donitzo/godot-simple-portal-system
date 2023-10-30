@@ -122,7 +122,7 @@ func _process(delta:float) -> void:
             # Resize the viewport with a fixed height and dynamic width
             var viewport_size:Vector2i = get_viewport().size
             var aspect_ratio:float = float(viewport_size.x) / viewport_size.y
-            _viewport.size = Vector2i(vertical_viewport_resolution * aspect_ratio, vertical_viewport_resolution)
+            _viewport.size = Vector2i(int(vertical_viewport_resolution * aspect_ratio + 0.5), vertical_viewport_resolution)
 
     # Disable viewport for portals further away than disable_viewport_distance
     _viewport.disable_3d = main_camera.global_position.distance_to(global_position) > disable_viewport_distance
