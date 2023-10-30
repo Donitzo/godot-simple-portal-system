@@ -84,7 +84,7 @@ func _process(delta:float) -> void:
     
     Portal.raycast(get_tree(), origin, (end - origin).normalized(), _handle_raycast_callable)
 
-func _handle_raycast(from:Vector3, dir:Vector3, segment_distance:float, recursive_distance:float, recursions:int) -> bool:
+func _handle_raycast(from:Vector3, dir:Vector3, segment_distance:float, _recursive_distance:float, recursions:int) -> bool:
     var distance:float = min(100, segment_distance)
     var target:Vector3 = from + dir * distance
 
