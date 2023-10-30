@@ -146,7 +146,7 @@ func _process(delta:float) -> void:
     var d_3:float = (corner_3 - _exit_camera.global_position).dot(camera_forward)
     var d_4:float = (corner_4 - _exit_camera.global_position).dot(camera_forward)
 
-    # The near distance is the shortest distance which still contains all the corners
+    # The near clip distance is the shortest distance which still contains all the corners
     _exit_camera.near = max(_EXIT_CAMERA_NEAR_MIN, min(d_1, d_2, d_3, d_4) - exit_near_subtract)
     _exit_camera.far = main_camera.far
     _exit_camera.fov = main_camera.fov
