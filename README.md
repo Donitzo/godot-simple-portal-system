@@ -88,7 +88,7 @@ Portal.raycast(get_tree(), from_position, direction, callable, [max_distance=INF
 
 By default `max_recursions` is 2, meaning the ray may pass two portals.
 
-`_handle_raycast` is always invoked at least once for the original ray. The `segment_distance` is `INF` if no portal was hit. The function is invoked once more each time the ray recursively passes through another portal. A ray can be prematurely interrupted if `_handle_raycast` returns true, or if it hits the `max_recursions` limit. Return true if for example the current ray segment was blocked by something.
+`_handle_raycast` is always invoked at least once for the original ray. The `segment_distance` is `INF` if no portal was hit, or the distance to the next portal if a portal was hit. The function is invoked once more each time the ray recursively passes through another portal. A ray can be prematurely interrupted if `_handle_raycast` returns true, or if it hits the `max_recursions` limit. Return true if for example the current ray segment (within `segment_distance`) was blocked by something.
 
 ## Feedback & Bug Reports
 
