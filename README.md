@@ -39,7 +39,7 @@ First you need to model some portal meshes, or just use a plane or a box.
 
 > **Note**: Portals are expensive to render. Disable portals which are far away or use "disable_viewport_distance".
 
-> **Note**: Ensure that the parent hierarchy of the portal is uniformly scaled. Non-uniform scaling in the parent hierarchy can introduce skewing effects, which may lead to unexpected or incorrect behavior of the portal.
+> **Note**: Ensure that the parent hierarchy of the portal is uniformly scaled. Non-uniform scaling in the parent hierarchy can introduce skewing effects, which may lead to unexpected or incorrect behavior of the portal. However, scaling the portal itself in a non-uniform fashion is okay.
 
 1. Attach the `portal.gd` script to two `MeshInstance3D` nodes that represent your portal surfaces.
 2. Establish a connection between the two portals: Assign one portal to the `exit_portal` property of the other portal. For a one-way portal, leave one portal disconnected.
