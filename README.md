@@ -10,13 +10,13 @@ This simple portal system is meant as an educational example on how you can crea
 
 ![Demo animation](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/demo.gif)
 
-### Theory
+## Theory
 
 In essence, portals are an illusion created by placing a virtual "exit camera" behind the exit portal. This camera replicates the main player camera's relative position to the entrance portal. As a result, both the player and the exit camera view the entrance and exit portals as if they occupy the same screen space. The visuals seen by the exit camera are rendered onto a 'viewport' in Godot, which is then overlaid on the entrance portal through a screen-space shader. This gives the impression that what's behind the exit portal is visible through the entrance portal.
 
 ![Portal theory](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/portals.png)
 
-### About the code
+## About the code
 
 This repository contains a small demo project which shows the portals in action. You can move around using WASD or the arrow keys, and look around using the mouse. A raycaster will show you which crates you hit as you move the mouse cursor.
 
@@ -25,7 +25,7 @@ If you want to use the portals in your own project, you only need these two file
 `src/shaders/portal.gdshader`
 `src/scripts/portal.gd`
 
-### About Modelling Portals
+## About Modelling Portals
 
 First you need to model some portal meshes, or just use a plane or a box.
 
@@ -35,7 +35,7 @@ First you need to model some portal meshes, or just use a plane or a box.
 
 ![Mesh](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/mesh.png)
 
-### Setup Instructions
+## Setup Instructions
 
 > **Note**: Portals are expensive to render. Disable portals which are far away or use "disable_viewport_distance".
 
