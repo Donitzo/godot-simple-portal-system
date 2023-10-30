@@ -224,37 +224,43 @@ static func raycast(tree:SceneTree, from:Vector3, dir:Vector3, handle_raycast:Ca
 
         # Find the closest portal the ray intersects       
         for portal in portals:
-            if portal != ignore_portal and portal.is_visible_in_tree():
-                var local_from:Vector3 = portal.to_local(from)
-                var local_dir:Vector3 = portal.global_transform.basis.inverse() * dir
+            # Ignore exit portals and invisible portals
+            if portal == ignore_portal or not portal.is_visible_in_tree():
+                continue
 
-                # Ray is parallel to the portal                
-                if local_dir.z == 0:
-                    continue
-                
-                # Ignore backside    
-                if local_dir.z > 0 and ignore_backside:
-                    continue
+            var local_from:Vector3 = portal.to_local(from)
+            var local_dir:Vector3 = portal.global_transform.basis.inverse() * dir
 
-                # Get the intersection point of the ray with the Z axis
-                var t:float = -local_from.z / local_dir.z
-                if t <= 0:
-                    continue
-                    
-                # Check if the ray hit inside the portal bounding box
-                var local_hit:Vector3 = local_from + t * local_dir
-                var aabb:AABB = portal._mesh_aabb
-                if aabb.position.x <= local_hit.x and local_hit.x <= aabb.position.x + aabb.size.x and\
-                    aabb.position.y <= local_hit.y and local_hit.y <= aabb.position.y + aabb.size.y:
-                    var hit:Vector3 = portal.to_global(local_hit)
-                        
-                    # Check if this was the closest portal
-                    var distance_sqr:float = hit.distance_squared_to(from)
-                    if distance_sqr < closest_distance_sqr:
-                        closest_hit = hit
-                        closest_dir = dir
-                        closest_distance_sqr = distance_sqr
-                        closest_portal = portal
+            # Check if ray is parallel to the portal                
+            if local_dir.z == 0:
+                continue
+
+            # Ignore backside    
+            if local_dir.z > 0 and ignore_backside:
+                continue
+
+            # Get the intersection point of the ray with the Z axis
+            var t:float = -local_from.z / local_dir.z
+            
+            # Is the intersection behind the start position?
+            if t <= 0:
+                continue
+
+            # Check if the ray hit inside the portal bounding box (ignoring Z)
+            var local_hit:Vector3 = local_from + t * local_dir
+            var aabb:AABB = portal._mesh_aabb
+            if local_hit.x < aabb.position.x or local_hit.x > aabb.position.x + aabb.size.x or\
+                local_hit.y < aabb.position.y or local_hit.y > aabb.position.y + aabb.size.y:
+                continue
+
+            # Check if this was the closest portal
+            var hit:Vector3 = portal.to_global(local_hit)
+            var distance_sqr:float = hit.distance_squared_to(from)
+            if distance_sqr < closest_distance_sqr:
+                closest_hit = hit
+                closest_dir = dir
+                closest_distance_sqr = distance_sqr
+                closest_portal = portal
 
         # Calculate the ray distance
         var hit_distance:float = INF if is_inf(closest_distance_sqr) else sqrt(closest_distance_sqr)
