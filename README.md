@@ -6,7 +6,7 @@
 
 A Simple Portal System for Godot 4 (and 3 with a little work). Portals hopefully need no introduction. Just think of the game Portal and you get the idea. Non-nested portals are deceptively simple to implement, and can be incredibly powerful as both a gameplay mechanic and as a convenience feature to move players around your level, or to provide countless other fun special effects.
 
-This simple portal system is meant as an educational example on how you can create portals in Godot. Consider it a starting point.
+This simple portal system is meant as an educational example on how you can create portals in Godot. Consider it a starting point, as the relevant portal code has been documented clearly.
 
 ![Demo animation](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/demo.gif)
 
