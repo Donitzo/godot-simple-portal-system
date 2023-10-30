@@ -211,7 +211,7 @@ func get_nearest_aabb_distance(target_position:Vector3) -> float:
 
 ## Raycast against portals (See instructions).
 static func raycast(tree:SceneTree, from:Vector3, dir:Vector3, handle_raycast:Callable, 
-    max_distance:float = INF, max_recursions:int = 2, ignore_backside:bool = true) -> void:
+    max_distance:float = INF, max_recursions:int = 16, ignore_backside:bool = true) -> void:
     var portals:Array = tree.get_nodes_in_group("portals")
     var ignore_portal:Portal = null
     var recursive_distance:float = 0
