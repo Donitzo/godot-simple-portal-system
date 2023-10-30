@@ -153,26 +153,46 @@ func _process(delta:float) -> void:
 
 ## Return a new Transform3D relative to the exit portal based on the real Transform3D relative to this portal.
 func real_to_exit_transform(real:Transform3D) -> Transform3D:
+    # Convert from global space to local space at the entrance (this) portal
     var local:Transform3D = global_transform.affine_inverse() * real
-    var scaled:Transform3D = local.scaled(global_transform.basis.get_scale())
-    var flipped:Transform3D = scaled.rotated(Vector3.UP, PI)
+    # Compensate for any scale the entrance portal may have
+    var unscaled:Transform3D = local.scaled(global_transform.basis.get_scale())
+    # Flip it (the portal always flips the view 180 degrees)
+    var flipped:Transform3D = unscaled.rotated(Vector3.UP, PI)
+    # Apply any scale the exit portal may have (and apply custom exit scale)
     var exit_scale_vector:Vector3 = exit_portal.global_transform.basis.get_scale()
-    return exit_portal.global_transform * flipped.scaled(Vector3.ONE / exit_scale_vector * exit_scale)
+    var scaled_at_exit:Transform3D = flipped.scaled(Vector3.ONE / exit_scale_vector * exit_scale)
+    # Convert from local space at the exit portal to global space
+    var local_at_exit:Transform3D = exit_portal.global_transform * scaled_at_exit
+    return local_at_exit
 
 ## Return a new position relative to the exit portal based on the real position relative to this portal.
 func real_to_exit_position(real:Vector3) -> Vector3:
+    # Convert from global space to local space at the entrance (this) portal
     var local:Vector3 = global_transform.affine_inverse() * real
-    var scaled:Vector3 = local * global_transform.basis.get_scale()
+    # Compensate for any scale the entrance portal may have
+    var unscaled:Vector3 = local * global_transform.basis.get_scale()
+    # Apply any scale the exit portal may have (and apply custom exit scale)
     var exit_scale_vector:Vector3 = Vector3(-1, 1, 1) * exit_portal.global_transform.basis.get_scale()
-    return exit_portal.global_transform * (scaled / exit_scale_vector * exit_scale)
+    var scaled_at_exit:Vector3 = unscaled / exit_scale_vector * exit_scale
+    # Convert from local space at the exit portal to global space
+    var local_at_exit:Vector3 = exit_portal.global_transform * scaled_at_exit
+    return local_at_exit
 
 ## Return a new direction relative to the exit portal based on the real direction relative to this portal.
 func real_to_exit_direction(real:Vector3) -> Vector3:
+    # Convert from global to local space at the entrance (this) portal
     var local:Vector3 = global_transform.basis.inverse() * real
-    var scaled:Vector3 = local * global_transform.basis.get_scale()
-    var flipped:Vector3 = scaled.rotated(Vector3.UP, PI)
+    # Compensate for any scale the entrance portal may have
+    var unscaled:Vector3 = local * global_transform.basis.get_scale()
+    # Flip it (the portal always flips the view 180 degrees)
+    var flipped:Vector3 = unscaled.rotated(Vector3.UP, PI)
+    # Apply any scale the exit portal may have (and apply custom exit scale)
     var exit_scale_vector:Vector3 = exit_portal.global_transform.basis.get_scale()
-    return exit_portal.global_transform.basis * (flipped / exit_scale_vector * exit_scale)
+    var scaled_at_exit:Vector3 = flipped / exit_scale_vector * exit_scale
+    # Convert from local space at the exit portal to global space
+    var local_at_exit:Vector3 = exit_portal.global_transform.basis * scaled_at_exit
+    return local_at_exit
 
 ## Get the nearest distance between a global position and the portal's bounding box.
 func get_nearest_aabb_distance(target_position:Vector3) -> float:
