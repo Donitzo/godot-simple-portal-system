@@ -1,7 +1,7 @@
 """
     Asset: Godot Simple Portal System
     File: portal.gd
-    Version: 1.0
+    Version: 1.1
     Description: A simple portal system for viewport-based portals in Godot 4.
     Instructions: For detailed documentation, see the README or visit: https://github.com/Donitzo/godot-simple-portal-system
     Repository: https://github.com/Donitzo/godot-simple-portal-system
@@ -36,7 +36,7 @@ const _EXIT_CAMERA_NEAR_MIN:float = 0.01
 ## The scale of the exit side of the portal. < 1 means the exit is smaller than the entrance.
 @export var exit_scale:float = 1.0
 ## A value subtracted from the exit camera near clipping plane. Useful for handling clipping issues.
-@export var exit_near_subtract:float
+@export var exit_near_subtract:float = 0.05
 
 ## The main camera. Leave unset to use the default 3D camera.
 @export var main_camera:Camera3D
@@ -132,30 +132,25 @@ func _process(delta:float) -> void:
     # Move the exit camera relative to the exit portal based on the main camera's position relative to the entrance portal    
     _exit_camera.global_transform = real_to_exit_transform(main_camera.global_transform)
 
-    # Copy the main camera's properties
+    # Get the four corners of the portal bounding box clamped to Z=0 (portal surface)
+    var corner_1:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x, _mesh_aabb.position.y, 0))
+    var corner_2:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x + _mesh_aabb.size.x, _mesh_aabb.position.y, 0))
+    var corner_3:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x + _mesh_aabb.size.x, _mesh_aabb.position.y + _mesh_aabb.size.y, 0))
+    var corner_4:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x, _mesh_aabb.position.y + _mesh_aabb.size.y, 0))
+
+    # Calculate the distance along the exit camera forward vector at which each of the portal corners projects
+    var camera_forward:Vector3 = -_exit_camera.global_transform.basis.z.normalized()
+
+    var d_1:float = (corner_1 - _exit_camera.global_position).dot(camera_forward)
+    var d_2:float = (corner_2 - _exit_camera.global_position).dot(camera_forward)
+    var d_3:float = (corner_3 - _exit_camera.global_position).dot(camera_forward)
+    var d_4:float = (corner_4 - _exit_camera.global_position).dot(camera_forward)
+
+    # The near distance is the shortest distance which still contains all the corners
+    _exit_camera.near = max(_EXIT_CAMERA_NEAR_MIN, min(d_1, d_2, d_3, d_4) - exit_near_subtract)
     _exit_camera.far = main_camera.far
     _exit_camera.fov = main_camera.fov
     _exit_camera.keep_aspect = main_camera.keep_aspect
-
-    # Calculate the distance from the exit camera to the nearest point on the exit portal's bounding box
-    var distance_to_near_plane_center:float = exit_portal.get_nearest_aabb_distance(_exit_camera.global_position)
-
-    # Determine the viewport's aspect ratio. The aspect ratio calculation is inverted based on keep_aspect.
-    var aspect_ratio:float = float(_viewport.size.x) / _viewport.size.y \
-        if _exit_camera.keep_aspect == 1 else float(_viewport.size.y) / _viewport.size.x
-
-    # Using the camera's field of view, calculate the half dimensions of the near clipping plane
-    var near_half_size_a:float = distance_to_near_plane_center * tan(deg_to_rad(_exit_camera.fov) / 2)
-    var near_half_size_b:float = near_half_size_a * aspect_ratio
-    var near_half_diagonal_length:float = sqrt(near_half_size_a ** 2 + near_half_size_b ** 2)
-
-    # Calculate the distance from the camera to the corner of the near clipping plane
-    var distance_to_near_plane_corner:float = sqrt(distance_to_near_plane_center ** 2 + near_half_diagonal_length ** 2)
-    var corner_to_center_difference:float = distance_to_near_plane_corner - distance_to_near_plane_center
-
-    # Adjust the near clipping plane distance to prevent the clipping plane's corners from intersecting the portal bounding box.
-    # The offset hopefully minimizes rendering objects behind the portal.
-    _exit_camera.near = max(_EXIT_CAMERA_NEAR_MIN, distance_to_near_plane_center - corner_to_center_difference - exit_near_subtract)
 
 ## Return a new Transform3D relative to the exit portal based on the real Transform3D relative to this portal.
 func real_to_exit_transform(real:Transform3D) -> Transform3D:
@@ -199,15 +194,6 @@ func real_to_exit_direction(real:Vector3) -> Vector3:
     # Convert from local space at the exit portal to global space
     var local_at_exit:Vector3 = exit_portal.global_transform.basis * scaled_at_exit
     return local_at_exit
-
-## Get the nearest distance between a global position and the portal's bounding box.
-func get_nearest_aabb_distance(target_position:Vector3) -> float:
-    var local:Vector3 = to_local(target_position)
-    var nearest:Vector3 = Vector3(
-        clamp(local.x, _mesh_aabb.position.x, _mesh_aabb.position.x + _mesh_aabb.size.x),
-        clamp(local.y, _mesh_aabb.position.y, _mesh_aabb.position.y + _mesh_aabb.size.y),
-        clamp(local.z, _mesh_aabb.position.z, _mesh_aabb.position.z + _mesh_aabb.size.z))
-    return to_global(nearest).distance_to(target_position)
 
 ## Raycast against portals (See instructions).
 static func raycast(tree:SceneTree, from:Vector3, dir:Vector3, handle_raycast:Callable, 
