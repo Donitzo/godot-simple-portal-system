@@ -62,6 +62,12 @@ func _ready() -> void:
         set_process(false)
         return
 
+    # Non-uniform parent scaling can introduce skew which isn't compensated for
+    if get_parent() != null:
+        var parent_scale:Vector3 = get_parent().global_transform.basis.get_scale()
+        if abs(parent_scale.x - parent_scale.y) > 0.001 or abs(parent_scale.x - parent_scale.z) > 0.001:
+            push_warning("The parent of \"%s\" is not uniformly scaled. The portal will not work correctly." % name)
+
     # The portals should be updated last so the main camera has its final position
     process_priority = 1000
 
