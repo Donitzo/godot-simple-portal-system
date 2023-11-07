@@ -21,7 +21,7 @@ const _EXIT_CAMERA_NEAR_MIN:float = 0.01
 ## The portal mesh's local bounding box.
 @onready var _mesh_aabb:AABB = mesh.get_aabb()
 
-## The vertical resolution of the portal viewport, which covers the entire screen and not just the portal mesh. Use 0 to use the original window resolution.
+## The vertical resolution of the portal viewport which covers the entire screen not just the portal mesh. Use 0 to use the real resolution.
 @export var vertical_viewport_resolution:int = 512
 
 ## Disable viewport distance. Portals further away than this won't have their viewports rendered.
@@ -35,8 +35,8 @@ const _EXIT_CAMERA_NEAR_MIN:float = 0.01
 
 ## The scale of the exit side of the portal. < 1 means the exit is smaller than the entrance.
 @export var exit_scale:float = 1.0
-## The amount of padding to add behind the exit portal along the local Z axis when calculating the exit camera near clipping plane. Increase this value if the exit portal is cut off.
-@export var exit_back_padding:float = 0.05
+## A value subtracted from the exit camera near clipping plane. Useful for handling clipping issues.
+@export var exit_near_subtract:float = 0.05
 
 ## The main camera. Leave unset to use the default 3D camera.
 @export var main_camera:Camera3D
@@ -136,10 +136,10 @@ func _process(delta:float) -> void:
     _exit_camera.global_transform = real_to_exit_transform(main_camera.global_transform)
 
     # Get the four corners of the portal bounding box clamped to Z=0 (portal surface)
-    var corner_1:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x, _mesh_aabb.position.y, -exit_back_padding))
-    var corner_2:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x + _mesh_aabb.size.x, _mesh_aabb.position.y, -exit_back_padding))
-    var corner_3:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x + _mesh_aabb.size.x, _mesh_aabb.position.y + _mesh_aabb.size.y, -exit_back_padding))
-    var corner_4:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x, _mesh_aabb.position.y + _mesh_aabb.size.y, -exit_back_padding))
+    var corner_1:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x, _mesh_aabb.position.y, 0))
+    var corner_2:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x + _mesh_aabb.size.x, _mesh_aabb.position.y, 0))
+    var corner_3:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x + _mesh_aabb.size.x, _mesh_aabb.position.y + _mesh_aabb.size.y, 0))
+    var corner_4:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x, _mesh_aabb.position.y + _mesh_aabb.size.y, 0))
 
     # Calculate the distance along the exit camera forward vector at which each of the portal corners projects
     var camera_forward:Vector3 = -_exit_camera.global_transform.basis.z.normalized()
@@ -150,7 +150,7 @@ func _process(delta:float) -> void:
     var d_4:float = (corner_4 - _exit_camera.global_position).dot(camera_forward)
 
     # The near clip distance is the shortest distance which still contains all the corners
-    _exit_camera.near = max(_EXIT_CAMERA_NEAR_MIN, min(d_1, d_2, d_3, d_4))
+    _exit_camera.near = max(_EXIT_CAMERA_NEAR_MIN, min(d_1, d_2, d_3, d_4) - exit_near_subtract)
     _exit_camera.far = main_camera.far
     _exit_camera.fov = main_camera.fov
     _exit_camera.keep_aspect = main_camera.keep_aspect
