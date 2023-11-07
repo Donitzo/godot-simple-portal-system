@@ -48,11 +48,12 @@ First you need to model some portal meshes, or just use a plane or a box.
 1. Attach the `portal.gd` script to two `MeshInstance3D` nodes that represent your portal surfaces.
 2. Establish a connection between the two portals: Assign one portal to the `exit_portal` property of the other portal. For a one-way portal, leave one portal disconnected.
 3. Set your primary camera to the `main_camera` property. If left unset, the portal will default to the primary camera if one exists.
-4. Define the fading range for the portal using `fade_out_distance_max` and `fade_out_distance_min`. Fades to `fade_out_color`.
-5. Define the `disable_viewport_distance` for portal rendering. Put the value slightly above `fade_out_distance_max` to ensure the portal fades out completely before disabling itself.
-6. Define the `exit_scale` to adjust the exit portal's view scale. Imagine, for instance, a large door leading to a small door.
-7. Adjust the `exit_near_subtract` if objects behind the exit portal get cut off.
-8. Set `exit_environment` to assign a specific environment to a portal. This is important if, for instance, you want to prevent environmental effects from being applied twice.
+4. Set the `vertical_viewport_resolution` of the viewport rendering the portal (which covers the entire screen). Set to 0 to automatically use the real screen resolution.
+5. Define the fading range for the portal using `fade_out_distance_max` and `fade_out_distance_min`. Fades to `fade_out_color`.
+6. Define the `disable_viewport_distance` for portal rendering. Put the value slightly above `fade_out_distance_max` to ensure the portal fades out completely before disabling itself.
+7. Define the `exit_scale` to adjust the exit portal's view scale. Imagine, for instance, a large door leading to a small door.
+8. Adjust the `exit_back_padding` if objects behind the exit portal get cut off.
+9. Set `exit_environment` to assign a specific environment to a portal. This is important if, for instance, you want to prevent environmental effects from being applied twice.
 
 ## Advanced Usage
 
