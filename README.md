@@ -73,6 +73,14 @@ This code can also be used to teleport an object to the exit portal. Alternative
 
 > **Note**: Portals currently do not nest (ie, you can't see through two portals at once). To nest portals you'd have to update the exit_camera position in-between draw calls, or figure out a way to change the camera view matrix in-between rendering viewports. That is beyond the scope of this simple system, but if you got some nice ideas how to implement these things in godot, please [open an issue](https://github.com/Donitzo/godot-simple-portal-system/issues).
 
+### Crossing a Portal
+
+If the player in your game has a physical shape, such as hands or a body, having these parts cross the portal surface before teleporting the player to the exit will cause them to disappear. There are several solutions to this issue:
+
+* Create a dummy player at the exit portal and move it using real_to_exit_transform. This stand-in will replace the missing player as it moves through the portal.
+* Instead of a single portal, create two pairs of one-way portals with a buffer zone between them. This allows the player to fully enter the buffer zone before being teleported to the exit.
+* With a single pair of portals, create a buffer zone by moving the mesh surface backward along the Z-axis. Note that since the exit camera's near clipping range calculations assume the mesh is at Z=0, you may need to adjust the near clipping range through exit_near_subtract or another method. Anecdotally, in my game, I prefer making the portals shaped like "/‾‾‾‾\" rather than "______". This provides a buffer zone for the player to move their hand in while still occupying the same space as a flat portal.
+
 ## Raycasting
 
 Raycasting through portals can be complex. To simplify this, a built-in raycasting function is provided.
