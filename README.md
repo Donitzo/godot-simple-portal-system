@@ -77,7 +77,7 @@ This code can also be used to teleport an object to the exit portal. Alternative
 
 If the player in your game has a physical shape, such as hands or a body, having these parts cross the portal surface before teleporting the player to the exit will cause them to disappear. There are several solutions to this issue:
 
-* Create a dummy player at the exit portal and move it using real_to_exit_transform. This stand-in will replace the missing player as it moves through the portal.
+* Create a dummy player at the exit portal and move it using `real_to_exit_transform`. This stand-in will replace the missing player as it moves through the portal.
 * Instead of a single portal, create two pairs of one-way portals with a buffer zone between them. This allows the player to fully enter the buffer zone before being teleported to the exit.
 * With a single pair of portals, create a buffer zone by moving the mesh surface backward along the Z-axis. Note that since the exit camera's near clipping range calculations assume the mesh is at Z=0, you may need to adjust the near clipping range through exit_near_subtract or another method. Anecdotally, in my game, I prefer making the portals shaped like "/‾‾‾‾\\" rather than "______". This provides a buffer zone for the player to move their hand in while still occupying the same space as a flat portal.
 
