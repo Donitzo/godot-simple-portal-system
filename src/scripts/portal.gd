@@ -150,11 +150,12 @@ func _process(delta:float) -> void:
         if _seconds_until_resize <= 0:
             _seconds_until_resize = NAN
 
-            # Resize the viewport with a fixed height and dynamic width
             var viewport_size:Vector2i = get_viewport().size
             if vertical_viewport_resolution == 0:
+                # Resize the viewport to the main viewport size
                 _viewport.size = viewport_size
             else:
+                # Resize the viewport to the fixed height vertical_viewport_resolution and dynamic width
                 var aspect_ratio:float = float(viewport_size.x) / viewport_size.y
                 _viewport.size = Vector2i(int(vertical_viewport_resolution * aspect_ratio + 0.5), vertical_viewport_resolution)
 
