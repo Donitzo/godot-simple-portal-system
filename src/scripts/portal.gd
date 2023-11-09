@@ -1,7 +1,7 @@
 """
     Asset: Godot Simple Portal System
     File: portal.gd
-    Version: 1.1
+    Version: 1.2
     Description: A simple portal system for viewport-based portals in Godot 4.
     Instructions: For detailed documentation, see the README or visit: https://github.com/Donitzo/godot-simple-portal-system
     Repository: https://github.com/Donitzo/godot-simple-portal-system
@@ -26,6 +26,9 @@ const _EXIT_CAMERA_NEAR_MIN:float = 0.01
 
 ## Disable viewport distance. Portals further away than this won't have their viewports rendered.
 @export var disable_viewport_distance:float = 11
+## Whether to destroy the disabled viewport to save memory. The viewport is re-created when within range again.
+@export var destroy_disabled_viewport:bool = false
+
 ## The maximum fade-out distance.
 @export var fade_out_distance_max:float = 10
 ## The minimum fade-out distance.
@@ -77,20 +80,6 @@ func _ready() -> void:
     # Get the main camera
     if main_camera == null:
         main_camera = get_viewport().get_camera_3d()
-    
-    # Create the viewport for the portal surface
-    _viewport = SubViewport.new()
-    _viewport.name = "Viewport"
-    _viewport.render_target_clear_mode = SubViewport.CLEAR_MODE_ONCE
-    add_child(_viewport)
-    _viewport.owner = self
-
-    # Create the exit camera which renders the portal surface for the viewport
-    _exit_camera = Camera3D.new()
-    _exit_camera.name = "Camera"
-    _exit_camera.environment = exit_environment
-    _viewport.add_child(_exit_camera)
-    _exit_camera.owner = _viewport
 
     # The portal shader renders the viewport on-top of the portal mesh in screen-space
     material_override = ShaderMaterial.new()
@@ -113,6 +102,35 @@ func _process(delta:float) -> void:
             _seconds_until_resize = 0
         return
 
+    # Disable viewport for portals further away than disable_viewport_distance
+    var disable_viewport:bool = main_camera.global_position.distance_squared_to(global_position) >\
+        disable_viewport_distance * disable_viewport_distance
+    if _viewport != null:
+        _viewport.disable_3d = disable_viewport
+
+    if disable_viewport:
+        # Destroy disabled viewport to save memory
+        if destroy_disabled_viewport and _viewport != null:
+            _viewport.queue_free()
+            _viewport = null
+        return
+
+    # Create or re-create viewport
+    if _viewport == null:
+        # Create the viewport for the portal surface
+        _viewport = SubViewport.new()
+        _viewport.name = "Viewport"
+        _viewport.render_target_clear_mode = SubViewport.CLEAR_MODE_ONCE
+        add_child(_viewport)
+        _viewport.owner = self
+
+        # Create the exit camera which renders the portal surface for the viewport
+        _exit_camera = Camera3D.new()
+        _exit_camera.name = "Camera"
+        _exit_camera.environment = exit_environment
+        _viewport.add_child(_exit_camera)
+        _exit_camera.owner = _viewport
+
     # Throttle the viewport resizing for better performance
     if not is_nan(_seconds_until_resize):
         _seconds_until_resize -= delta
@@ -126,11 +144,6 @@ func _process(delta:float) -> void:
             else:
                 var aspect_ratio:float = float(viewport_size.x) / viewport_size.y
                 _viewport.size = Vector2i(int(vertical_viewport_resolution * aspect_ratio + 0.5), vertical_viewport_resolution)
-
-    # Disable viewport for portals further away than disable_viewport_distance
-    _viewport.disable_3d = main_camera.global_position.distance_to(global_position) > disable_viewport_distance
-    if _viewport.disable_3d:
-        return
 
     # Move the exit camera relative to the exit portal based on the main camera's position relative to the entrance portal    
     _exit_camera.global_transform = real_to_exit_transform(main_camera.global_transform)
