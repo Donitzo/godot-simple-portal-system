@@ -41,7 +41,7 @@ First you need to model some portal meshes, or just use a plane or a box.
 
 ## Setup Instructions
 
-> **Note**: Portals are expensive to render. Disable portals which are far away or use "disable_viewport_distance".
+> **Note**: Portals are expensive to render. Disable portals which are far away or use `disable_viewport_distance`. In addition, use `destroy_disabled_viewport` if you have a lot of portals to save texture memory.
 
 > **Note**: Ensure that the parent hierarchy of the portal is uniformly scaled. Non-uniform scaling in the parent hierarchy can introduce skewing effects, which may lead to unexpected or incorrect behavior of the portal. However, scaling the portal itself in a non-uniform way is okay since it is handled by the transformations.
 
@@ -50,7 +50,7 @@ First you need to model some portal meshes, or just use a plane or a box.
 3. Set your primary camera to the `main_camera` property. If left unset, the portal will default to the primary camera if one exists.
 4. Set the `vertical_viewport_resolution` of the viewport rendering the portal (which covers the entire screen). Set to 0 to automatically use the real screen resolution.
 5. Define the fading range for the portal using `fade_out_distance_max` and `fade_out_distance_min`. Fades to `fade_out_color`.
-6. Define the `disable_viewport_distance` for portal rendering. Put the value slightly above `fade_out_distance_max` to ensure the portal fades out completely before disabling itself. If you have a lot of portals is may be beneficial to enable `destroy_disabled_viewport`, which will free up texture memory when the portal is disabled by destroying the viewport.
+6. Define the `disable_viewport_distance` for portal rendering. Put the value slightly above `fade_out_distance_max` to ensure the portal fades out completely before disabling itself. If you have a lot of portals is may be beneficial to enable `destroy_disabled_viewport`, which will free up texture memory when the portal is disabled by destroying the viewport, at the cost of the overhead of re-creating the viewport again later.
 7. Define the `exit_scale` to adjust the exit portal's view scale. Imagine, for instance, a large door leading to a small door.
 8. Adjust the `exit_near_subtract` if objects behind the exit portal get cut off. At 0 the portal exit is roughly cut at Z=0.
 9. Set `exit_environment` to assign a specific environment to a portal. This is important if, for instance, you want to prevent environmental effects from being applied twice.
