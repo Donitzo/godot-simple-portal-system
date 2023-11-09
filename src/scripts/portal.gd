@@ -129,6 +129,7 @@ func _process(delta:float) -> void:
     if disable_viewport:
         # Destroy the disabled viewport to save memory
         if _viewport != null and destroy_disabled_viewport:
+            material_override.set_shader_parameter("albedo", null)
             _viewport.queue_free()
             _viewport = null
 
