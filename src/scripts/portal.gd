@@ -105,9 +105,7 @@ func _create_viewport() -> void:
     _viewport.render_target_clear_mode = SubViewport.CLEAR_MODE_ONCE
     add_child(_viewport)
     _viewport.owner = self
-
     material_override.set_shader_parameter("albedo", _viewport.get_texture())
-    _seconds_until_resize = 0
 
     # Create the exit camera which renders the portal surface for the viewport
     _exit_camera = Camera3D.new()
@@ -115,6 +113,9 @@ func _create_viewport() -> void:
     _exit_camera.environment = exit_environment
     _viewport.add_child(_exit_camera)
     _exit_camera.owner = _viewport
+
+    # Resize the viewport on the next _process
+    _seconds_until_resize = 0
 
 func _process(delta:float) -> void:
     # Don't process invisible portals
