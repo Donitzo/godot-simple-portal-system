@@ -41,7 +41,7 @@ First you need to model some portal meshes, or just use a plane or a box.
 
 ## Setup Instructions
 
-> **Note**: Portals are resource-intensive to render and consume texture memory. Disable portals that are far away from the player by using `disable_viewport_distance`. Furthermore, if you have many portals, consider enabling `destroy_disabled_viewport` to conserve texture memory, as this will destroy the viewport of disabled portals.
+> **Note**: Portals are resource-intensive to render and consume texture memory. Disable portals that are far away from the player by using `disable_viewport_distance`. Furthermore, if you have many portals, consider enabling `destroy_disabled_viewport` to conserve texture memory, as this will destroy the viewport of disabled portals. However, this may potentially cause a small hickup when the viewport is re-created midgame.
 
 > **Note**: Ensure that the parent hierarchy of the portal is uniformly scaled. Non-uniform scaling in the parent hierarchy can introduce skewing effects, which may lead to unexpected or incorrect behavior of the portal. However, scaling the portal itself in a non-uniform way is okay since it is handled by the transformations.
 
