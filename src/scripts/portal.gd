@@ -126,7 +126,6 @@ func _process(delta:float) -> void:
     if _viewport != null:
         _viewport.disable_3d = disable_viewport
 
-    # Don't process the rest if the viewport is disabled
     if disable_viewport:
         # Destroy the disabled viewport to save memory
         if _viewport != null and destroy_disabled_viewport:
@@ -137,6 +136,7 @@ func _process(delta:float) -> void:
         if not is_nan(_seconds_until_resize):
             _seconds_until_resize = 0
 
+        # Don't process the rest if the viewport is disabled
         return
 
     # Re/-Create viewport
