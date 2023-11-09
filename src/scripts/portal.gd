@@ -26,8 +26,8 @@ const _EXIT_CAMERA_NEAR_MIN:float = 0.01
 
 ## Disable viewport distance. Portals further away than this won't have their viewports rendered.
 @export var disable_viewport_distance:float = 11
-## Whether to destroy the disabled viewport to save memory. The viewport is re-created when within range again.
-@export var destroy_disabled_viewport:bool = false
+## Whether to destroy the disabled viewport to save texture memory. Useful when you have a lot of portals. The viewport is re/-created when within disable_viewport_distance.
+@export var destroy_disabled_viewport:bool = true
 
 ## The maximum fade-out distance.
 @export var fade_out_distance_max:float = 10
@@ -45,7 +45,7 @@ const _EXIT_CAMERA_NEAR_MIN:float = 0.01
 @export var main_camera:Camera3D
 
 ## An environment set for the exit camera. Leave unset to use the default environment.
-@export var exit_environment:Environment = null
+@export var exit_environment:Environment
 
 ## The exit portal. Leave unset to use this portal as an exit only.
 @export var exit_portal:Portal
@@ -89,9 +89,32 @@ func _ready() -> void:
     material_override.set_shader_parameter("fade_out_color", fade_out_color)   
 
     get_viewport().connect("size_changed", _handle_resize)
+    
+    # Create the viewport when _ready if it's not destroyed when disabled.
+    # This may potentially get rid of the initial lag when the viewport is first created.
+    if not destroy_disabled_viewport:
+        _create_viewport()
 
 func _handle_resize() -> void:
     _seconds_until_resize = _RESIZE_THROTTLE_SECONDS
+
+func _create_viewport() -> void:
+    # Create the viewport for the portal surface
+    _viewport = SubViewport.new()
+    _viewport.name = "Viewport"
+    _viewport.render_target_clear_mode = SubViewport.CLEAR_MODE_ONCE
+    add_child(_viewport)
+    _viewport.owner = self
+
+    material_override.set_shader_parameter("albedo", _viewport.get_texture())
+    _seconds_until_resize = 0
+
+    # Create the exit camera which renders the portal surface for the viewport
+    _exit_camera = Camera3D.new()
+    _exit_camera.name = "Camera"
+    _exit_camera.environment = exit_environment
+    _viewport.add_child(_exit_camera)
+    _exit_camera.owner = _viewport
 
 func _process(delta:float) -> void:
     # Don't process invisible portals
@@ -104,34 +127,23 @@ func _process(delta:float) -> void:
     # Disable viewport for portals further away than disable_viewport_distance
     var disable_viewport:bool = main_camera.global_position.distance_squared_to(global_position) >\
         disable_viewport_distance * disable_viewport_distance
+
+    # Enable or disable 3D rendering for the viewport (if it exists)
     if _viewport != null:
         _viewport.disable_3d = disable_viewport
 
+    # Don't process the rest if the viewport is disabled
     if disable_viewport:
-        # Destroy disabled viewport to save memory
-        if destroy_disabled_viewport and _viewport != null:
+        # Destroy the disabled viewport to save memory
+        if _viewport != null and destroy_disabled_viewport:
             _viewport.queue_free()
             _viewport = null
+
         return
 
-    # Create or re-create viewport
+    # Re/-Create viewport
     if _viewport == null:
-        # Create the viewport for the portal surface
-        _viewport = SubViewport.new()
-        _viewport.name = "Viewport"
-        _viewport.render_target_clear_mode = SubViewport.CLEAR_MODE_ONCE
-        add_child(_viewport)
-        _viewport.owner = self
-
-        material_override.set_shader_parameter("albedo", _viewport.get_texture())
-        _seconds_until_resize = 0
-
-        # Create the exit camera which renders the portal surface for the viewport
-        _exit_camera = Camera3D.new()
-        _exit_camera.name = "Camera"
-        _exit_camera.environment = exit_environment
-        _viewport.add_child(_exit_camera)
-        _exit_camera.owner = _viewport
+        _create_viewport()
 
     # Throttle the viewport resizing for better performance
     if not is_nan(_seconds_until_resize):
