@@ -84,7 +84,6 @@ func _ready() -> void:
     # The portal shader renders the viewport on-top of the portal mesh in screen-space
     material_override = ShaderMaterial.new()
     material_override.shader = preload("res://shaders/portal.gdshader")
-    material_override.set_shader_parameter("albedo", _viewport.get_texture())
     material_override.set_shader_parameter("fade_out_distance_max", fade_out_distance_max)
     material_override.set_shader_parameter("fade_out_distance_min", fade_out_distance_min)
     material_override.set_shader_parameter("fade_out_color", fade_out_color)   
@@ -123,6 +122,8 @@ func _process(delta:float) -> void:
         _viewport.render_target_clear_mode = SubViewport.CLEAR_MODE_ONCE
         add_child(_viewport)
         _viewport.owner = self
+
+        material_override.set_shader_parameter("albedo", _viewport.get_texture())
         _seconds_until_resize = 0
 
         # Create the exit camera which renders the portal surface for the viewport
