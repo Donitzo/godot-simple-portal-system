@@ -88,12 +88,12 @@ func _ready() -> void:
     material_override.set_shader_parameter("fade_out_distance_min", fade_out_distance_min)
     material_override.set_shader_parameter("fade_out_color", fade_out_color)   
 
-    get_viewport().connect("size_changed", _handle_resize)
-    
     # Create the viewport when _ready if it's not destroyed when disabled.
-    # This may potentially get rid of the initial lag when the viewport is first created.
+    # This may potentially get rid of the initial lag when the viewport is first created (if memory is not an issue).
     if not destroy_disabled_viewport:
         _create_viewport()
+
+    get_viewport().connect("size_changed", _handle_resize)
 
 func _handle_resize() -> void:
     _seconds_until_resize = _RESIZE_THROTTLE_SECONDS
