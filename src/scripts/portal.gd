@@ -123,6 +123,7 @@ func _process(delta:float) -> void:
         _viewport.render_target_clear_mode = SubViewport.CLEAR_MODE_ONCE
         add_child(_viewport)
         _viewport.owner = self
+        _seconds_until_resize = 0
 
         # Create the exit camera which renders the portal surface for the viewport
         _exit_camera = Camera3D.new()
