@@ -27,7 +27,7 @@ If you want to use the portals in your own project, you only need these two file
 
 The shader is very simple and just renders a screen-space texture and handles fade-out.
 
-The portal script handles the creation of viewports and virtual cameras in `_ready`. In `_process` the exit camera position is updated according to the main camera. In addition, the `_process` function handles adjusting the near clipping plane of the exit camera to find a compromise between not rendering objects behind the portal, and not cutting off the portal itself. This is done by simply projecting the four corners of the portal onto the camera forward vector to get the near clipping distance. The portal class also has functions for transforming between frames of reference and raycasting.
+The portal script handles the creation of a viewport and virtual exit camera. In `_process` the exit camera position is updated according to the main camera. In addition, the `_process` function handles adjusting the near clipping plane of the exit camera to find a compromise between not rendering objects behind the portal, and not cutting off the portal itself. This is done by simply projecting the four corners of the portal onto the camera forward vector to get the near clipping distance. The portal class also has functions for transforming between frames of reference and raycasting.
 
 ## About Modelling Portals
 
@@ -50,7 +50,7 @@ First you need to model some portal meshes, or just use a plane or a box.
 3. Set your primary camera to the `main_camera` property. If left unset, the portal will default to the primary camera if one exists.
 4. Set the `vertical_viewport_resolution` of the viewport rendering the portal (which covers the entire screen). Set to 0 to automatically use the real screen resolution.
 5. Define the fading range for the portal using `fade_out_distance_max` and `fade_out_distance_min`. Fades to `fade_out_color`.
-6. Define the `disable_viewport_distance` for portal rendering. Put the value slightly above `fade_out_distance_max` to ensure the portal fades out completely before disabling itself.
+6. Define the `disable_viewport_distance` for portal rendering. Put the value slightly above `fade_out_distance_max` to ensure the portal fades out completely before disabling itself. If you have a lot of portals is may be beneficial to enable `destroy_disabled_viewport`, which will free up texture memory when the portal is disabled by destroying the viewport.
 7. Define the `exit_scale` to adjust the exit portal's view scale. Imagine, for instance, a large door leading to a small door.
 8. Adjust the `exit_near_subtract` if objects behind the exit portal get cut off. At 0 the portal exit is roughly cut at Z=0.
 9. Set `exit_environment` to assign a specific environment to a portal. This is important if, for instance, you want to prevent environmental effects from being applied twice.
