@@ -89,7 +89,7 @@ func _ready() -> void:
     material_override.set_shader_parameter("fade_out_color", fade_out_color)   
 
     # Create the viewport when _ready if it's not destroyed when disabled.
-    # This may potentially get rid of the initial lag when the viewport is first created.
+    # This may potentially get rid of the initial lag when the viewport is first created at the cost of texture memory.
     if not destroy_disabled_viewport:
         _create_viewport()
 
