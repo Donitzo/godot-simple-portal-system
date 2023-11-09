@@ -26,7 +26,7 @@ const _EXIT_CAMERA_NEAR_MIN:float = 0.01
 
 ## Disable viewport distance. Portals further away than this won't have their viewports rendered.
 @export var disable_viewport_distance:float = 11
-## Whether to destroy the disabled viewport to save texture memory. Useful when you have a lot of portals. The viewport is re/-created when within disable_viewport_distance.
+## Whether to destroy the disabled viewport to save texture memory. Useful when you have a lot of portals. The viewport is re/-created when within disable_viewport_distance and visible.
 @export var destroy_disabled_viewport:bool = true
 
 ## The maximum fade-out distance.
@@ -118,16 +118,9 @@ func _create_viewport() -> void:
     _seconds_until_resize = 0
 
 func _process(delta:float) -> void:
-    # Don't process invisible portals
-    if not is_visible_in_tree():
-        # Ensure the viewport can resize the moment it becomes visible again
-        if not is_nan(_seconds_until_resize):
-            _seconds_until_resize = 0
-        return
-
-    # Disable viewport for portals further away than disable_viewport_distance
-    var disable_viewport:bool = main_camera.global_position.distance_squared_to(global_position) >\
-        disable_viewport_distance * disable_viewport_distance
+    # Disable the viewport if the portal is further away than disable_viewport_distance or if it is invisible
+    var disable_viewport:bool = not is_visible_in_tree() or\
+        main_camera.global_position.distance_squared_to(global_position) > disable_viewport_distance * disable_viewport_distance
 
     # Enable or disable 3D rendering for the viewport (if it exists)
     if _viewport != null:
@@ -139,6 +132,10 @@ func _process(delta:float) -> void:
         if _viewport != null and destroy_disabled_viewport:
             _viewport.queue_free()
             _viewport = null
+
+        # Ensure the portal can re-size the second it is enabled again
+        if not is_nan(_seconds_until_resize):
+            _seconds_until_resize = 0
 
         return
 
