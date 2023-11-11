@@ -161,10 +161,10 @@ func _process(delta:float) -> void:
     _exit_camera.global_transform = real_to_exit_transform(main_camera.global_transform)
 
     # Get the four corners of the portal bounding box clamped to Z=0 (portal surface)
-    var corner_1:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x, _mesh_aabb.position.y, 0))
-    var corner_2:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x + _mesh_aabb.size.x, _mesh_aabb.position.y, 0))
-    var corner_3:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x + _mesh_aabb.size.x, _mesh_aabb.position.y + _mesh_aabb.size.y, 0))
-    var corner_4:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x, _mesh_aabb.position.y + _mesh_aabb.size.y, 0))
+    var corner_1:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x, _mesh_aabb.position.y, 0) * exit_scale)
+    var corner_2:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x + _mesh_aabb.size.x, _mesh_aabb.position.y, 0) * exit_scale)
+    var corner_3:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x + _mesh_aabb.size.x, _mesh_aabb.position.y + _mesh_aabb.size.y, 0) * exit_scale)
+    var corner_4:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x, _mesh_aabb.position.y + _mesh_aabb.size.y, 0) * exit_scale)
 
     # Calculate the distance along the exit camera forward vector at which each of the portal corners projects
     var camera_forward:Vector3 = -_exit_camera.global_transform.basis.z.normalized()
