@@ -27,7 +27,11 @@ If you want to use the portals in your own project, you only need these two file
 
 The shader is very simple and just renders a screen-space texture and handles fade-out.
 
-The portal script handles the creation of a viewport and virtual exit camera. In `_process` the exit camera position is updated according to the main camera. In addition, the `_process` function handles adjusting the near clipping plane of the exit camera to find a compromise between not rendering objects behind the portal, and not cutting off the portal itself. This is done by simply projecting the four corners of the portal onto the camera forward vector to get the near clipping distance. The portal class also has functions for transforming between frames of reference and raycasting.
+The portal script handles the creation of a viewport and virtual exit camera. In `_process` the exit camera position is updated according to the main camera. 
+
+In addition, the `_process` function handles adjusting the near clipping plane of the exit camera to find a compromise between not rendering objects behind the portal, and not cutting off the portal itself. This is done by projecting the four corners X, Y corners of the entrance portal bounding box relative to the exit portal (and exit scale). These four cornerse are then projected onto the exit camera forward vector to get the near clipping distance which contain them within the camera frustum. The reason the entrance portal bounding box is used rather than the exit portal is to allow you to skip creating an exit mesh at all for one-way portals.
+
+The portal class also has functions for transforming between frames of reference and raycasting.
 
 ## About Modelling Portals
 
