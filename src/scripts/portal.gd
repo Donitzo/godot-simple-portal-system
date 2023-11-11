@@ -1,7 +1,7 @@
 """
     Asset: Godot Simple Portal System
     File: portal.gd
-    Version: 1.5
+    Version: 1.6
     Description: A simple portal system for viewport-based portals in Godot 4.
     Instructions: For detailed documentation, see the README or visit: https://github.com/Donitzo/godot-simple-portal-system
     Repository: https://github.com/Donitzo/godot-simple-portal-system
@@ -60,8 +60,9 @@ var _exit_camera:Camera3D
 var _seconds_until_resize:float
 
 func _ready() -> void:
-    # An exit-free portal does not need anything
+    # An exit-free portal does not need to do anything
     if exit_portal == null:
+        visible = false
         set_process(false)
         return
 
@@ -160,12 +161,12 @@ func _process(delta:float) -> void:
     # Move the exit camera relative to the exit portal based on the main camera's position relative to the entrance portal    
     _exit_camera.global_transform = real_to_exit_transform(main_camera.global_transform)
 
-    # Get the four X, Y corners of the exit portal bounding box clamped to Z=0 (portal surface)
-    var aabb:AABB = exit_portal._mesh_aabb
-    var corner_1:Vector3 = exit_portal.to_global(Vector3(aabb.position.x, aabb.position.y, 0))
-    var corner_2:Vector3 = exit_portal.to_global(Vector3(aabb.position.x + aabb.size.x, aabb.position.y, 0))
-    var corner_3:Vector3 = exit_portal.to_global(Vector3(aabb.position.x + aabb.size.x, aabb.position.y + aabb.size.y, 0))
-    var corner_4:Vector3 = exit_portal.to_global(Vector3(aabb.position.x, aabb.position.y + aabb.size.y, 0))
+    # Get the four X, Y corners of the scaled entrance portal bounding box clamped to Z=0 (portal surface) relative to the exit portal.
+    # The entrance portal bounding box is used since the entrance portal mesh does not need to match the exit portal mesh.
+    var corner_1:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x, _mesh_aabb.position.y, 0) * exit_scale)
+    var corner_2:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x + _mesh_aabb.size.x, _mesh_aabb.position.y, 0) * exit_scale)
+    var corner_3:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x + _mesh_aabb.size.x, _mesh_aabb.position.y + _mesh_aabb.size.y, 0) * exit_scale)
+    var corner_4:Vector3 = exit_portal.to_global(Vector3(_mesh_aabb.position.x, _mesh_aabb.position.y + _mesh_aabb.size.y, 0) * exit_scale)
 
     # Calculate the distance along the exit camera forward vector at which each of the portal corners projects
     var camera_forward:Vector3 = -_exit_camera.global_transform.basis.z.normalized()
