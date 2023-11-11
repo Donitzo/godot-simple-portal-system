@@ -1,7 +1,7 @@
 """
     Asset: Godot Simple Portal System
     File: portal.gd
-    Version: 1.4
+    Version: 1.5
     Description: A simple portal system for viewport-based portals in Godot 4.
     Instructions: For detailed documentation, see the README or visit: https://github.com/Donitzo/godot-simple-portal-system
     Repository: https://github.com/Donitzo/godot-simple-portal-system
