@@ -160,7 +160,7 @@ func _process(delta:float) -> void:
     # Move the exit camera relative to the exit portal based on the main camera's position relative to the entrance portal    
     _exit_camera.global_transform = real_to_exit_transform(main_camera.global_transform)
 
-    # Get the four corners of the portal bounding box clamped to Z=0 (portal surface)
+    # Get the four X, Y corners of the exit portal bounding box clamped to Z=0 (portal surface)
     var aabb:AABB = exit_portal._mesh_aabb
     var corner_1:Vector3 = exit_portal.to_global(Vector3(aabb.position.x, aabb.position.y, 0))
     var corner_2:Vector3 = exit_portal.to_global(Vector3(aabb.position.x + aabb.size.x, aabb.position.y, 0))
