@@ -280,13 +280,13 @@ static func raycast(tree:SceneTree, from:Vector3, dir:Vector3, handle_raycast:Ca
 
         # Calculate the ray distance
         var hit_distance:float = INF if is_inf(closest_distance_sqr) else sqrt(closest_distance_sqr)
-        recursive_distance += hit_distance
 
         # Call the user-defined raycast function
         if handle_raycast.call(from, dir, hit_distance, recursive_distance, r):
             break
-            
+
         # Was no portal hit or was the maximum raycast distance reached?
+        recursive_distance += hit_distance
         if is_inf(closest_distance_sqr) or recursive_distance >= max_distance:
             break
         
