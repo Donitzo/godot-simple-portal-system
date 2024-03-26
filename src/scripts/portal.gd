@@ -60,11 +60,17 @@ var _exit_camera:Camera3D
 var _seconds_until_resize:float
 
 func _ready() -> void:
+    if not is_inside_tree():
+        push_error("The portal \"%s\" is not inside a SceneTree." % name)
+
     # An exit-free portal does not need to do anything
     if exit_portal == null:
         visible = false
         set_process(false)
         return
+
+    if not exit_portal.is_inside_tree() or exit_portal.get_tree() != get_tree():
+        push_error("The exit_portal \"%s\" of \"%s\" is not inside the same SceneTree." % [exit_portal.name, name])
 
     # Non-uniform parent scaling can introduce skew which isn't compensated for
     if get_parent() != null:
