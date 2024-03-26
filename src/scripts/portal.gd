@@ -124,7 +124,7 @@ func _create_viewport() -> void:
 
 func _process(delta:float) -> void:
     # Disable the viewport if the portal is further away than disable_viewport_distance or if the portal is invisible in the scene tree
-    var disable_viewport:bool = not is_inside_tree() or not is_visible_in_tree() or\
+    var disable_viewport:bool = not is_visible_in_tree() or\
         main_camera.global_position.distance_squared_to(global_position) > disable_viewport_distance * disable_viewport_distance
 
     # Enable or disable 3D rendering for the viewport (if it exists)
