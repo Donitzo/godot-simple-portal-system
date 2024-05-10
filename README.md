@@ -33,6 +33,8 @@ In addition, the `_process` function handles adjusting the near clipping plane o
 
 The portal class also has functions for transforming between frames of reference and raycasting.
 
+In addition, an example was created on how to handle basic teleportation through portals. See the [teleportation section](###Teleportation).
+
 ## About Modelling Portals
 
 First you need to model some portal meshes, or just use a plane or a box.
@@ -83,7 +85,17 @@ If the player in your game has a physical shape, such as hands or a body, having
 
 * Create a dummy player at the exit portal and move it using `real_to_exit_transform`. This stand-in will replace the missing player as it moves through the portal.
 * Instead of a single portal, create two pairs of one-way portals with a buffer zone between them. This allows the player to fully enter the buffer zone before being teleported to the exit. Keep in mind that this forces you to model the same buffer zone on both sides of the portal.
-* With a single pair of portals, create a buffer zone by moving the mesh surface backward along the Z-axis (+Y in Blender). Note that since the exit camera's near clipping range calculations assume the mesh is at Z=0, you may need to adjust the near clipping range through `exit_near_subtract` or another method. Anecdotally, in my game, I prefer making the portals shaped like a hard-edged lens like `/‾‾‾‾\` rather than `______`. This provides a buffer zone for the player to move their hand in while being flat around the portal edges. This kind of portal has depth if you look at it from the side, but it doesn't need you to model a buffer zone.
+* With a single pair of portals, create a buffer zone by moving the mesh surface backward along the Z-axis (+Y in Blender). Note that since the exit camera's near clipping range calculations assume the mesh is at Z=0, you may need to adjust the near clipping range through `exit_near_subtract` or another method. Anecdotally, in my game, I prefer making the portals shaped like a hard-edged lens like `/‾‾‾‾\` rather than `______`. This provides a buffer zone for the player to move their hand in while being flat around the portal edges. This kind of portal has depth if you look at it from the side, but it doesn't need you to model a buffer zone. See the example in the [teleportation section](###Teleportation).
+
+### Teleportation
+
+A sample of a teleportation script called `portal_teleport.gd` is provided with the sample scene. This script attaches to an [Area3D](https://docs.godotengine.org/en/stable/classes/class_area3d.html) node, which is parented to a portal node. Create a [CollisionShape3D](https://docs.godotengine.org/en/stable/tutorials/physics/collision_shapes_3d.html) as a child node of the Area3D node. This shape should be right behind the portal, acting as a trigger to teleport objects entering the portal.
+
+To trigger the teleportation, you need to define another Area3D with a CollisionShape3D on the object you want to teleport. Then, give it a Metadata element called "teleportable_root" to which you add a [NodePath](https://docs.godotengine.org/en/stable/classes/class_nodepath.html) pointing towards the root of the node to teleport (See the `Player` in the sample).
+
+The portals in the example scene have a buffer zone built into them. This allows the player's camera to turn around fully without clipping through the portal. If your player has a hand or is wider, you may also need to move the teleport trigger in front of the camera so that the player teleports before their hand clips through the portal.
+
+![Mesh](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/portal_buffer_zone.png)
 
 ## Raycasting
 
