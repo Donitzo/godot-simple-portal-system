@@ -33,7 +33,7 @@ In addition, the `_process` function handles adjusting the near clipping plane o
 
 The portal class also has functions for transforming between frames of reference and raycasting.
 
-In addition, an example was created on how to handle basic teleportation through portals. See the [teleportation section](#teleportation).
+In addition, an example is provided on how to handle basic teleportation through portals. See the [teleportation section](#teleportation).
 
 ## About Modelling Portals
 
