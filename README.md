@@ -91,7 +91,7 @@ If the player in your game has a physical shape, such as hands or a body, having
 
 A teleportation script called `portal_teleport.gd` is provided with the sample scene. This script attaches to an [Area3D](https://docs.godotengine.org/en/stable/classes/class_area3d.html) node, which is parented to a portal node. Create a [CollisionShape3D](https://docs.godotengine.org/en/stable/tutorials/physics/collision_shapes_3d.html) as a child node of the Area3D node. This shape should be right behind the portal, acting as a trigger to teleport objects entering the portal.
 
-To trigger the teleportation, you need to define another Area3D with a CollisionShape3D on the object you want to teleport. Then, give it a Metadata element called `teleportable_root` to which you add a [NodePath](https://docs.godotengine.org/en/stable/classes/class_nodepath.html) pointing towards the root of the node to teleport (See the `Player` in the sample).
+To trigger the teleportation, you need to define another Area3D with a CollisionShape3D on the object you want to teleport. Then, give it a Metadata element called `teleportable_root` to which you add a [NodePath](https://docs.godotengine.org/en/stable/classes/class_nodepath.html) pointing towards the root of the composite object you want to teleport (See the `Player` in the sample).
 
 The portals in the example scene have a buffer zone built into them. This allows the player's camera to turn around fully without clipping through the portal. If your player has a hand, you may also need to move the teleport trigger in front of the camera so that the player teleports before their hand clips through the portal.
 
