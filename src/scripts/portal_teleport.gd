@@ -1,7 +1,6 @@
 """
     Asset: Godot Simple Portal System
     File: portal.gd
-    Version: 1.7
     Description: An area which teleports the player through the parent node's portal.
     Instructions: For detailed documentation, see the README or visit: https://github.com/Donitzo/godot-simple-portal-system
     Repository: https://github.com/Donitzo/godot-simple-portal-system
