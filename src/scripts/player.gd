@@ -67,8 +67,6 @@ func _process(delta:float) -> void:
 
     if abs(position.z) > 4.4:
         position.x = clamp(position.x, -0.75, 0.75)
-        if abs(position.z) > 7.1:
-            position.z -= 7.1 * 2 * sign(position.z)
     else:
         position.x = clamp(position.x, -3.8, 3.8)
         if abs(position.x) > 0.75:
