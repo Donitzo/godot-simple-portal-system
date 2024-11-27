@@ -31,18 +31,20 @@ func _process(_delta:float) -> void:
     var i = 0
     while i < _overlapping_bodies.size():
         var body:RigidBody3D = _overlapping_bodies[i]
-        i += 1
 
         # This may also be a good place to manage a fake replica of the object.
         # Simply put it at the _parent_portal.real_to_exit_transform(body.global_transform) position.
 
-        _process_body(body)
+        if _process_body(body):
+            _overlapping_bodies.remove_at(i)
+        else:
+            i += 1
 
-func _process_body(body:RigidBody3D) -> void:
+func _process_body(body:RigidBody3D) -> bool:
     # Check that the physics body is moving towards the portal
     var portal_forward:Vector3 = _parent_portal.global_transform.basis.z.normalized()
     if velocity_check and body.linear_velocity.dot(portal_forward) > 0:
-        return
+        return false
     
     # Rotate physics rotation and velocity
     var portal_rotation:Basis = _parent_portal.real_to_exit_transform(Transform3D.IDENTITY).basis
@@ -55,14 +57,16 @@ func _process_body(body:RigidBody3D) -> void:
 
     # Transform the position and orientation
     body.global_transform = _parent_portal.real_to_exit_transform(body.global_transform)
+    
+    return true
 
 func _on_area_entered(area:Area3D) -> void:
     if area.has_meta("teleportable_root"):
         var root:Node3D = area.get_node(area.get_meta("teleportable_root"))
         if root is RigidBody3D:
             # Physics bodies may overlap the trigger without teleporting immediately
-            _overlapping_bodies.push_back(root)
-            _process_body(root)
+            if not _process_body(root):
+                _overlapping_bodies.push_back(root)
         else:
             # Other objects always teleport
             root.global_transform = _parent_portal.real_to_exit_transform(root.global_transform)
