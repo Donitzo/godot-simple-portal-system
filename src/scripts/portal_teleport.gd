@@ -28,7 +28,10 @@ func _ready() -> void:
     connect("area_exited", _on_area_exited)
 
 func _process(_delta:float) -> void:
-    for body in _overlapping_bodies:
+    var i = 0
+    while i < _overlapping_bodies.size():
+        var body:RigidBody3D = _overlapping_bodies[i]
+
         # This may also be a good place to manage a fake replica of the object.
         # Simply put it at the _parent_portal.real_to_exit_transform(body.global_transform) position.
 
