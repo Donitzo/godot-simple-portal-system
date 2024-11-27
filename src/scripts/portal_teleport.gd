@@ -1,7 +1,7 @@
 """
     Asset: Godot Simple Portal System
-    File: portal.gd
-    Description: An area which teleports the player through the parent node's portal. Handles RigidBody3D physics as well.
+    File: portal_teleport.gd
+    Description: An area which teleports a node through the parent node's portal. Checks entry velocity and handles RigidBody3D physics.
     Instructions: For detailed documentation, see the README or visit: https://github.com/Donitzo/godot-simple-portal-system
     Repository: https://github.com/Donitzo/godot-simple-portal-system
     License: CC0 License
