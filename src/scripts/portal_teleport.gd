@@ -90,7 +90,7 @@ func _try_teleport(entry:Dictionary) -> bool:
 
 func _on_area_entered(area:Area3D) -> void:
     if area.has_meta("teleportable_root"):
-        # the node may not teleport immediately if it's not heading TOWARDS the portal,
+        # The node may not teleport immediately if it's not heading TOWARDS the portal,
         # so keep a reference to the root node and its last position
         var root:Node3D = area.get_node(area.get_meta("teleportable_root"))
         var entry:Dictionary = {
