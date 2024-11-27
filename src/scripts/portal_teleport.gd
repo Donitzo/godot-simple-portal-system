@@ -10,14 +10,14 @@
 extends Area3D
 class_name PortalTeleport
 
-## Checks if RigidBody3Ds are moving TOWARDS the portal before teleporting.
+## Checks if the node is moving TOWARDS the portal before teleporting it.
 @export var velocity_check:bool = true
-## An additional velocity push given as the object exits the portal.
+## An additional velocity push given to RigidBody3Ds exiting the portal.
 @export var exit_push_velocity:float = 0
 
 var _parent_portal:Portal
 
-var _overlapping_bodies:Array = []
+var _overlapping_nodes:Array = []
 
 func _ready() -> void:
     _parent_portal = get_parent() as Portal
@@ -29,50 +29,60 @@ func _ready() -> void:
 
 func _process(_delta:float) -> void:
     var i = 0
-    while i < _overlapping_bodies.size():
-        var body:RigidBody3D = _overlapping_bodies[i]
+    while i < _overlapping_nodes.size():
+        var entry:Dictionary = _overlapping_nodes[i]
+        
+        # This may also be a good place to manage a fake replica of the node.
+        # Simply put it at the _parent_portal.real_to_exit_transform(entry.root.global_transform) position.
 
-        # This may also be a good place to manage a fake replica of the object.
-        # Simply put it at the _parent_portal.real_to_exit_transform(body.global_transform) position.
-
-        if _process_body(body):
-            _overlapping_bodies.remove_at(i)
+        if _try_teleport(entry):
+            _overlapping_nodes.remove_at(i)
         else:
             i += 1
 
-func _process_body(body:RigidBody3D) -> bool:
-    # Check that the physics body is moving towards the portal
-    var portal_forward:Vector3 = _parent_portal.global_transform.basis.z.normalized()
-    if velocity_check and body.linear_velocity.dot(portal_forward) > 0:
+# Try to teleport the node, and return false otherwise
+func _try_teleport(entry:Dictionary) -> bool:
+    var node:Node3D = entry.node
+    var last_position = entry.position
+    entry.position = _parent_portal.to_local(node.global_position)
+    
+    # Check if the node is moving towards the portal
+    if velocity_check and (last_position == null or last_position.z <= entry.position.z):
         return false
     
-    # Rotate physics rotation and velocity
-    var portal_rotation:Basis = _parent_portal.real_to_exit_transform(Transform3D.IDENTITY).basis
-    body.linear_velocity *= portal_rotation
-    body.angular_velocity *= portal_rotation
+    # Handle RigidBody3D physics    
+    if node is RigidBody3D:
+        # Rotate physics rotation and velocity
+        var portal_rotation:Basis = _parent_portal.real_to_exit_transform(Transform3D.IDENTITY).basis
+        node.linear_velocity *= portal_rotation
+        node.angular_velocity *= portal_rotation
 
-    # Additional push when exiting the portal
-    if exit_push_velocity > 0:
-        body.linear_velocity -= portal_forward * portal_rotation * exit_push_velocity
+        # Additional push when exiting the portal
+        if exit_push_velocity > 0:
+            var exit_forward:Vector3 = _parent_portal.exit_portal.global_transform.basis.z.normalized()
+            node.linear_velocity += exit_forward * exit_push_velocity
 
     # Transform the position and orientation
-    body.global_transform = _parent_portal.real_to_exit_transform(body.global_transform)
+    node.global_transform = _parent_portal.real_to_exit_transform(node.global_transform)
     
     return true
 
 func _on_area_entered(area:Area3D) -> void:
     if area.has_meta("teleportable_root"):
+        # the node may not teleport immediately if it's not heading TOWARDS the portal,
+        # so keep a reference to the root node and its last position
         var root:Node3D = area.get_node(area.get_meta("teleportable_root"))
-        if root is RigidBody3D:
-            # Physics bodies may overlap the trigger without teleporting immediately
-            if not _process_body(root):
-                _overlapping_bodies.push_back(root)
-        else:
-            # Other objects always teleport
-            root.global_transform = _parent_portal.real_to_exit_transform(root.global_transform)
+        var entry:Dictionary = {
+            "node": root, 
+            "position": null,
+        }
+        if not _try_teleport(entry):
+            _overlapping_nodes.push_back(entry)
 
 func _on_area_exited(area:Area3D) -> void:
     if area.has_meta("teleportable_root"):
         var root:Node3D = area.get_node(area.get_meta("teleportable_root"))
-        if root is RigidBody3D:
-            _overlapping_bodies.erase(root)
+        for entry in _overlapping_nodes:
+            if entry.node == root:
+                _overlapping_nodes.erase(entry)
+                break
