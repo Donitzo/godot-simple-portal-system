@@ -43,16 +43,28 @@ func _process(_delta:float) -> void:
 # Try to teleport the node, and return false otherwise
 func _try_teleport(entry:Dictionary) -> bool:
     var node:Node3D = entry.node
-    var last_position = entry.position
-    entry.position = _parent_portal.to_local(node.global_position)
     
     # Check if the node is moving towards the portal
-    if velocity_check and (last_position == null or last_position.z <= entry.position.z):
-        return false
+    if velocity_check:
+        if node is RigidBody3D:
+            var local_velocity:Vector3 = _parent_portal.global_transform.basis.inverse() * node.linear_velocity
+            if local_velocity.z > 0:
+                return false
+        elif node is CharacterBody3D:
+            var local_velocity:Vector3 = _parent_portal.global_transform.basis.inverse() * node.velocity
+            if local_velocity.z > 0:
+                return false
+        else:
+            var last_position = entry.position
+            entry.position = _parent_portal.to_local(node.global_position)
+            if last_position == null:
+                return false
+            elif last_position.z <= entry.position.z:
+                return false
     
     # Handle RigidBody3D physics    
     if node is RigidBody3D:
-        # Rotate physics rotation and velocity
+        # Rotate rotation and velocity
         var portal_rotation:Basis = _parent_portal.real_to_exit_transform(Transform3D.IDENTITY).basis
         node.linear_velocity *= portal_rotation
         node.angular_velocity *= portal_rotation
@@ -61,6 +73,17 @@ func _try_teleport(entry:Dictionary) -> bool:
         if exit_push_velocity > 0:
             var exit_forward:Vector3 = _parent_portal.exit_portal.global_transform.basis.z.normalized()
             node.linear_velocity += exit_forward * exit_push_velocity
+    
+    # Handle CharacterBody3D physics
+    elif node is CharacterBody3D:
+        # Rotate velocity
+        var portal_rotation:Basis = _parent_portal.real_to_exit_transform(Transform3D.IDENTITY).basis
+        node.velocity *= portal_rotation
+
+        # Additional push when exiting the portal
+        if exit_push_velocity > 0:
+            var exit_forward:Vector3 = _parent_portal.exit_portal.global_transform.basis.z.normalized()
+            node.velocity += exit_forward * exit_push_velocity
 
     # Transform the position and orientation
     node.global_transform = _parent_portal.real_to_exit_transform(node.global_transform)
