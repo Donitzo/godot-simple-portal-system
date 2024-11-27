@@ -105,6 +105,10 @@ The portals in the example scene have a buffer zone built into them. This allows
 
 ![Mesh](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/portal_buffer_zone.png)
 
+An updated version of the teleport script also handles teleporting of [RigidBody3Ds](https://docs.godotengine.org/en/stable/classes/class_rigidbody3d.html). When working with physics, this also allows us to check whether the velocity of the body is moving towards or away from the portal, and only teleport the body if it moves towards the portal. The position, orientation, linear velocity and angular velocity is then transformed into the exit portal's frame of reference.
+
+![Physics boxes](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/physics_boxes.gif)
+
 ## Raycasting
 
 Raycasting through portals can be complex. To simplify this, a built-in raycasting function is provided.
