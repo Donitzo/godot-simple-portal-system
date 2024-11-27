@@ -57,9 +57,7 @@ func _try_teleport(entry:Dictionary) -> bool:
         else:
             var last_position = entry.position
             entry.position = _parent_portal.to_local(node.global_position)
-            if last_position == null:
-                return false
-            elif last_position.z <= entry.position.z:
+            if last_position == null or last_position.z <= entry.position.z:
                 return false
     
     # Handle RigidBody3D physics    
