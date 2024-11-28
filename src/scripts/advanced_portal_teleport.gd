@@ -8,7 +8,7 @@
 """
 
 extends Area3D
-class_name PortalTeleport
+class_name AdvancedPortalTeleport
 
 ## Checks if the node is moving TOWARDS the portal before teleporting it.
 @export var velocity_check:bool = true
