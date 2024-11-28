@@ -17,7 +17,11 @@ class_name PortalTeleport
 
 var _parent_portal:Portal
 
+# The currently overlapping nodes of any type
 var _overlapping_nodes:Array = []
+
+# Clones to hide
+var _clones:Array = []
 
 func _ready() -> void:
     _parent_portal = get_parent() as Portal
@@ -30,21 +34,27 @@ func _ready() -> void:
 func _process(_delta:float) -> void:
     var i = 0
     while i < _overlapping_nodes.size():
-        var entry:Dictionary = _overlapping_nodes[i]
-        
-        # Move the portal clone if it exists
-        if entry.clone != null:
-            entry.clone.global_transform = _parent_portal.real_to_exit_transform(entry.node.global_transform)
-
-        if _try_teleport(entry):
+        if _try_teleport(_overlapping_nodes[i]):
             _overlapping_nodes.remove_at(i)
+        else:
+            i += 1
+
+    i = 0
+    while i < _clones.size():
+        if _clones[i].get_meta('portal_count') == 0:
+            _clones[i].visible = false
+            _clones.remove_at(i)
         else:
             i += 1
 
 # Try to teleport the node, and return false otherwise
 func _try_teleport(entry:Dictionary) -> bool:
     var node:Node3D = entry.node
-    
+
+    # Move the clone to the exit portal (node hasn't teleported yet)
+    if entry.clone != null:
+        entry.clone.global_transform = _parent_portal.real_to_exit_transform(entry.node.global_transform)
+
     # Check if the node is moving towards the portal
     if velocity_check:
         if node is RigidBody3D:
@@ -60,7 +70,11 @@ func _try_teleport(entry:Dictionary) -> bool:
             entry.position = _parent_portal.to_local(node.global_position)
             if last_position == null or last_position.z <= entry.position.z:
                 return false
-    
+
+    # Move the clone to the entry portal (node teleported)
+    if entry.clone != null:
+        entry.clone.global_transform = entry.node.global_transform
+
     # Handle RigidBody3D physics    
     if node is RigidBody3D:
         # Rotate rotation and velocity
@@ -92,25 +106,37 @@ func _try_teleport(entry:Dictionary) -> bool:
 func _on_area_entered(area:Area3D) -> void:
     if area.has_meta("teleportable_root"):
         # The node may not teleport immediately if it's not heading TOWARDS the portal,
-        # so keep a reference to the root node and its last position
+        # so we keep a reference to it until it teleports or leaves
+
         var root:Node3D = area.get_node(area.get_meta("teleportable_root"))
         var clone:Node3D = area.get_node(area.get_meta("portal_clone")) if area.has_meta("portal_clone") else null
+
         var entry:Dictionary = {
             "node": root, 
             "clone": clone,
             "position": null,
         }
+
+        # Keep track of portal clones so they can be hidden again
+        if clone != null and not _clones.has(clone):
+            clone.visible = true
+            _clones.push_back(clone)
+            
+            # Portal clones are hidden when they are not overlapping any more portals
+            clone.set_meta('portal_count', clone.get_meta('portal_count', 0) + 1)
+
         if not _try_teleport(entry):
             _overlapping_nodes.push_back(entry)
-            if clone != null:
-                clone.visible = true
 
 func _on_area_exited(area:Area3D) -> void:
     if area.has_meta("teleportable_root"):
         var root:Node3D = area.get_node(area.get_meta("teleportable_root"))
+        var clone:Node3D = area.get_node(area.get_meta("portal_clone")) if area.has_meta("portal_clone") else null
+    
+        if clone != null:
+            clone.set_meta('portal_count', clone.get_meta('portal_count') - 1)
+
         for entry in _overlapping_nodes:
             if entry.node == root:
-                if entry.clone != null:
-                    entry.clone.visible = false
                 _overlapping_nodes.erase(entry)
                 break
