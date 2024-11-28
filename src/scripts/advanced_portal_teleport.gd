@@ -1,6 +1,6 @@
 """
     Asset: Godot Simple Portal System
-    File: portal_teleport.gd
+    File: advanced_portal_teleport.gd
     Description: An area which teleports a node through the parent node's portal. Checks entry velocity and handles RigidBody3D and CharacterBody3D physics. Can also handle a portal clone of the node if specified.
     Instructions: For detailed documentation, see the README or visit: https://github.com/Donitzo/godot-simple-portal-system
     Repository: https://github.com/Donitzo/godot-simple-portal-system
