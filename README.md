@@ -109,7 +109,7 @@ The updated version of the teleport script also handles the physics of teleporti
 
 ![Physics boxes](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/physics_boxes.gif)
 
-Finally, using the advanced portal script, a portal clone can be used as a placeholder of the other side of the portal. The portal clone is specified as a Metadata element called `portal_clone` to which you add a [NodePath] pointing to a visual placeholder. The placeholder doesn't need to be fully functional as long as it looks like whatever the original object is. The clone node is hidden and shown automatically as the node passes portals.
+Finally, using the advanced portal script, a portal clone can be used as a placeholder of the other side of the portal. The portal clone is specified as a Metadata element called `portal_clone` to which you add a [NodePath](https://docs.godotengine.org/en/stable/classes/class_nodepath.html) pointing to a visual placeholder. The placeholder doesn't need to be fully functional as long as it looks like whatever the original object is. The clone node is hidden and shown automatically as the node passes portals.
 
 ![Portal clone](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/clone.gif)
 
