@@ -12,7 +12,7 @@ class_name PortalTeleport
 
 ## Checks if the node is moving TOWARDS the portal before teleporting it.
 @export var velocity_check:bool = true
-## An additional velocity push given to RigidBody3Ds exiting the portal.
+## An additional velocity push given to RigidBody3Ds/CharacterBody3D exiting the portal.
 @export var exit_push_velocity:float = 0
 
 var _parent_portal:Portal
@@ -48,11 +48,11 @@ func _try_teleport(entry:Dictionary) -> bool:
     if velocity_check:
         if node is RigidBody3D:
             var local_velocity:Vector3 = _parent_portal.global_transform.basis.inverse() * node.linear_velocity
-            if local_velocity.z > 0:
+            if local_velocity.z >= 0:
                 return false
         elif node is CharacterBody3D:
             var local_velocity:Vector3 = _parent_portal.global_transform.basis.inverse() * node.velocity
-            if local_velocity.z > 0:
+            if local_velocity.z >= 0:
                 return false
         else:
             var last_position = entry.position
