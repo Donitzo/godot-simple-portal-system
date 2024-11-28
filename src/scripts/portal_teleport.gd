@@ -1,7 +1,7 @@
 """
     Asset: Godot Simple Portal System
     File: portal_teleport.gd
-    Description: An area which teleports a node through the parent node's portal. Checks entry velocity and handles RigidBody3D and CharacterBody3D physics.
+    Description: An area which teleports a node through the parent node's portal. Checks entry velocity and handles RigidBody3D and CharacterBody3D physics. Can also handle a portal clone of the node if specified.
     Instructions: For detailed documentation, see the README or visit: https://github.com/Donitzo/godot-simple-portal-system
     Repository: https://github.com/Donitzo/godot-simple-portal-system
     License: CC0 License
@@ -32,8 +32,9 @@ func _process(_delta:float) -> void:
     while i < _overlapping_nodes.size():
         var entry:Dictionary = _overlapping_nodes[i]
         
-        # This may also be a good place to manage a fake replica of the node.
-        # Simply put it at the _parent_portal.real_to_exit_transform(entry.root.global_transform) position.
+        # Move the portal clone if it exists
+        if entry.clone != null:
+            entry.clone.global_transform = _parent_portal.real_to_exit_transform(entry.node.global_transform)
 
         if _try_teleport(entry):
             _overlapping_nodes.remove_at(i)
@@ -93,17 +94,23 @@ func _on_area_entered(area:Area3D) -> void:
         # The node may not teleport immediately if it's not heading TOWARDS the portal,
         # so keep a reference to the root node and its last position
         var root:Node3D = area.get_node(area.get_meta("teleportable_root"))
+        var clone:Node3D = area.get_node(area.get_meta("portal_clone")) if area.has_meta("portal_clone") else null
         var entry:Dictionary = {
             "node": root, 
+            "clone": clone,
             "position": null,
         }
         if not _try_teleport(entry):
             _overlapping_nodes.push_back(entry)
+            if clone != null:
+                clone.visible = true
 
 func _on_area_exited(area:Area3D) -> void:
     if area.has_meta("teleportable_root"):
         var root:Node3D = area.get_node(area.get_meta("teleportable_root"))
         for entry in _overlapping_nodes:
             if entry.node == root:
+                if entry.clone != null:
+                    entry.clone.visible = false
                 _overlapping_nodes.erase(entry)
                 break
