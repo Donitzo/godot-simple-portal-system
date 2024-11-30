@@ -94,12 +94,12 @@ Two teleportation scripts called `simple_portal_teleport.gd` and `advanced_porta
 To trigger the teleportation, you need to define another Area3D with a CollisionShape3D on the object you want to teleport. Then, give it a Metadata element called `teleportable_root` to which you add a [NodePath](https://docs.godotengine.org/en/stable/classes/class_nodepath.html) pointing towards the root of the composite object you want to teleport (See the `Player` in the sample).
 
 `PortalTeleport Area3D`:
-- [ ] **Monitoring**
-- [x] **Monitorable**
-
-`Teleportable Object Area3D`:
 - [x] **Monitoring**
 - [ ] **Monitorable**
+
+`Teleportable Object Area3D`:
+- [ ] **Monitoring**
+- [x] **Monitorable**
 
 The portals in the example scene have a buffer zone built into them. This allows the player's camera to turn around fully without clipping through the portal. If your player has a hand, you may also need to move the teleport trigger in front of the camera so that the player teleports before their hand clips through the portal.
 
