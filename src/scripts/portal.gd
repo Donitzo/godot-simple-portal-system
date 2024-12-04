@@ -45,6 +45,8 @@ const _EXIT_CAMERA_NEAR_MIN:float = 0.01
 
 ## An environment set for the exit camera. Leave unset to use the default environment.
 @export var exit_environment:Environment
+## The cull mask for the exit camera. Use it to hide certain objects in the exit camera.
+@export var exit_cull_mask:int = 1
 
 ## The exit portal. Leave unset to use this portal as an exit only.
 @export var exit_portal:Portal
@@ -116,6 +118,7 @@ func _create_viewport() -> void:
     _exit_camera = Camera3D.new()
     _exit_camera.name = "Camera"
     _exit_camera.environment = exit_environment
+    _exit_camera.cull_mask = exit_cull_mask
     _viewport.add_child(_exit_camera)
 
     # Resize the viewport on the next _process
