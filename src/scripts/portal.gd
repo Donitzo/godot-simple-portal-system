@@ -46,7 +46,7 @@ const _EXIT_CAMERA_NEAR_MIN:float = 0.01
 ## An environment set for the exit camera. Leave unset to use the default environment.
 @export var exit_environment:Environment
 ## The cull mask for the exit camera. Use it to hide certain objects in the exit camera.
-@export var exit_cull_mask:int = 1
+@export var exit_cull_mask:int = 0b11111111111111111111
 
 ## The exit portal. Leave unset to use this portal as an exit only.
 @export var exit_portal:Portal
