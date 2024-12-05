@@ -51,6 +51,9 @@ const _EXIT_CAMERA_NEAR_MIN:float = 0.01
 ## The exit portal. Leave unset to use this portal as an exit only.
 @export var exit_portal:Portal
 
+## An environment set for the exit camera. Leave unset to use the default environment.
+@export var portal_shader:Shader = preload("res://shaders/portal.gdshader")
+
 # The viewport rendering the portal surface
 var _viewport:SubViewport
 
@@ -91,7 +94,7 @@ func _ready() -> void:
 
     # The portal shader renders the viewport on-top of the portal mesh in screen-space
     material_override = ShaderMaterial.new()
-    material_override.shader = preload("res://shaders/portal.gdshader")
+    material_override.shader = portal_shader
     material_override.set_shader_parameter("fade_out_distance_max", fade_out_distance_max)
     material_override.set_shader_parameter("fade_out_distance_min", fade_out_distance_min)
     material_override.set_shader_parameter("fade_out_color", fade_out_color)   
