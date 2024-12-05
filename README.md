@@ -109,7 +109,9 @@ The updated version of the teleport script also handles the physics of teleporti
 
 ![Physics boxes](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/physics_boxes.gif)
 
-Finally, using the advanced portal script, a portal clone can be used as a placeholder of the other side of the portal. The portal clone is specified as a Metadata element called `portal_clone` to which you add a [NodePath](https://docs.godotengine.org/en/stable/classes/class_nodepath.html) pointing to a visual placeholder. The placeholder doesn't need to be fully functional as long as it looks like whatever the original object is. The clone node is hidden and shown automatically as the node passes portals.
+Using the advanced portal script, a portal clone can be used as a placeholder of the other side of the portal. The portal clone is specified as a Metadata element called `portal_clone` to which you add a [NodePath](https://docs.godotengine.org/en/stable/classes/class_nodepath.html) pointing to a visual placeholder. The placeholder doesn't need to be fully functional as long as it looks like whatever the original object is. The clone node is hidden and shown automatically as the node passes portals.
+
+If you need to place portals on top of solid surfaces (Like in Portal), you have to disable the wall collisions for the objects as it approaches the portal. you can use the `collision_disable_area.gd` script for this. This area will disable the layer masks listed in the `disabled_collision_masks` metadata array under any physics bodies in your scene, and then re-enable them a short time after the object leaves the area again.
 
 ![Portal clone](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/clone.gif)
 
