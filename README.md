@@ -111,6 +111,8 @@ The updated version of the teleport script also handles the physics of teleporti
 
 Using the advanced portal script, a portal clone can be used as a placeholder of the other side of the portal. The portal clone is specified as a Metadata element called `portal_clone` to which you add a [NodePath](https://docs.godotengine.org/en/stable/classes/class_nodepath.html) pointing to a visual placeholder. The placeholder doesn't need to be fully functional as long as it looks like whatever the original object is. The clone node is hidden and shown automatically as the node passes portals.
 
+Finally, if you want portals flush against surfaces (like in Portal), you may choose to disable wall collisions for the physics bodies as they approach the portal (how else could the node enter it). You can use the `collision_disable_area.gd` script to disable the collision masks of your choice for bodies which enter into the [Area3D](https://docs.godotengine.org/en/stable/classes/class_area3d.html) you set the script on. When the bodies enter the area, all layer masks set in the `disabled_collision_masks` metadata field array of the body will be disabled until shortly after the body leaves the area again. See the `portal_demo.gd` scene for a practical example.
+
 ![Portal clone](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/portal_demo.gif)
 
 ## Raycasting
