@@ -41,17 +41,17 @@ func _process(delta:float) -> void:
             continue
         
         # If the portal has yet to leave the enter portal area, try to teleport it
-        if not crossing_node.left_teleporter and _try_teleport(_crossing_nodes[i]):
+        if not crossing_node.left and _try_teleport(_crossing_nodes[i]):
             # Switch portals so that the portal clone is placed at the entrance portal instead
             crossing_node.clone_portal = _parent_portal.exit_portal
-            crossing_node.left_teleporter = true
+            crossing_node.left = true
 
         # Move the clone to the exit portal
         if crossing_node.clone != null and crossing_node.clone_portal != null:
             crossing_node.clone.global_transform = crossing_node.clone_portal.real_to_exit_transform(crossing_node.node.global_transform)
 
         # If the node has left the enter portal, keep it a bit longer before erasing it
-        if crossing_node.left_teleporter:
+        if crossing_node.left:
             crossing_node.keep_alive_seconds -= delta
         if crossing_node.keep_alive_seconds <= 0:
             # Hide portal clone
@@ -127,7 +127,7 @@ func _on_area_entered(area:Area3D) -> void:
                 "clone": clone,
                 "clone_portal": null,
                 "teleporter": null,
-                "left_teleporter": false,
+                "left": false,
                 "keep_alive_seconds": 0.0,
                 "position": null,
             }
@@ -135,7 +135,7 @@ func _on_area_entered(area:Area3D) -> void:
 
         crossing_node.clone_portal = _parent_portal
         crossing_node.teleporter = self
-        crossing_node.left_teleporter = false
+        crossing_node.left = false
         crossing_node.keep_alive_seconds = clone_keep_alive_seconds
         crossing_node.position = null
 
@@ -149,7 +149,7 @@ func _on_area_entered(area:Area3D) -> void:
         # Try an initial teleport
         if _try_teleport(crossing_node):
             crossing_node.clone_portal = _parent_portal.exit_portal
-            crossing_node.left_teleporter = true
+            crossing_node.left = true
 
 func _on_area_exited(area:Area3D) -> void:
     if area.has_meta("teleportable_root"):
@@ -158,4 +158,4 @@ func _on_area_exited(area:Area3D) -> void:
 
         if crossing_node.teleporter == self:
             # The node left the enter portal without teleporting (but don't erase it yet)
-            crossing_node.left_teleporter = true
+            crossing_node.left = true
