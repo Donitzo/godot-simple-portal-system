@@ -36,13 +36,13 @@ If you don't want to make your own teleporting script, you can use one of these 
 `src/scripts/simple_teleport.gd`
 `src/scripts/advanced_teleport.gd`
 
+See the [teleportation section](#teleportation) for more information.
+
 The portal script handles the creation of a viewport and virtual exit camera. In `_process` the exit camera position is updated according to the main camera. 
 
 In addition, the portal `_process` function handles adjusting the near clipping plane of the exit camera to find a compromise between not rendering objects behind the portal, and not cutting off the portal itself. This is done by getting the world position of the four X, Y corners of the entrance portal bounding box relative to (and scaled by) the exit camera. These corners are then projected onto the exit camera forward vector to get the near clipping distance which contain the corners within the camera frustum. The reason the entrance portal bounding box is used rather than the exit portal bounding box is because the entrance and exit meshes does not need to match each other, and you are looking through the entrance mesh, not the exit mesh.
 
 The portal class also has functions for transforming between frames of reference and raycasting.
-
-In addition, an example is provided on how to handle basic teleportation through portals. See the [teleportation section](#teleportation).
 
 ## About Modelling Portals
 
