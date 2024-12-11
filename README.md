@@ -42,7 +42,9 @@ See the [teleportation section](#teleportation) for more information.
 
 The portal script handles the creation of a viewport and positioning of the virtual exit camera. It also has functions for transforming between frames of reference and raycasting.
 
-In `_process` the exit camera position is updated according to the main camera. The `_process` function also handles adjusting the near clipping plane of the exit camera to find a compromise between not rendering objects behind the portal, and not cutting off the portal itself. This is done by getting the world position of the four X, Y corners of the entrance portal bounding box relative to (and scaled by) the exit camera. These corners are then projected onto the exit camera forward vector to get the near clipping distance which contain the corners within the camera frustum. The reason the entrance portal bounding box is used rather than the exit portal bounding box is because the entrance and exit meshes does not need to match each other, and you are looking through the entrance mesh, not the exit mesh.
+In `_process` the exit camera position is updated according to the main camera. I.e. the exit camera position mirrors the main (player) camera from the perspective of the exit portal.
+
+The `_process` function also handles adjusting the near clipping plane of the exit camera, to find a compromise between not rendering objects behind the portal, and not cutting off the portal itself. This is done by getting the world position of the four X, Y corners of the entrance portal bounding box relative to (and scaled by) the exit camera. These corners are then projected onto the exit camera forward vector to get the near clipping distance which contain the corners within the camera frustum. The reason the entrance portal bounding box is used rather than the exit portal bounding box is because the entrance and exit meshes does not need to match each other, and you are looking through the entrance mesh, not the exit mesh. The exit may not even have any mesh at all.
 
 ## About Modelling Portals
 
