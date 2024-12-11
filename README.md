@@ -25,7 +25,7 @@ If you want to use the portals in your own project, you only need these two file
 `src/shaders/portal.gdshader`
 `src/scripts/portal.gd`
 
-For an exmaple of a fancier Portal-like portal, you can set this shader in the portal instance:
+For an example of a fancier Portal-like portal, you can set this shader in the portal instance:
 
 `src/shaders/spiraling_portal.gdshader`
 
