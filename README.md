@@ -25,6 +25,8 @@ If you want to use the portals in your own project, you only need these two file
 `src/shaders/portal.gdshader`
 `src/scripts/portal.gd`
 
+The portal script handles the creation of a viewport and positioning of the virtual exit camera. It also has functions for transforming between frames of reference and raycasting.
+
 For an example of a fancier Portal-like portal, you can set this shader in the portal instance:
 
 `src/shaders/spiraling_portal.gdshader`
@@ -38,9 +40,9 @@ If you don't want to make your own teleporting script, you can use one of these 
 
 See the [teleportation section](#teleportation) for more information.
 
-The portal script handles the creation of a viewport and positioning of the virtual exit camera. It also has functions for transforming between frames of reference and raycasting.
+### About the Portal script
 
-> **Note**: In `_process` the exit camera position is updated according to the main camera. The `_process` function also handles adjusting the near clipping plane of the exit camera to find a compromise between not rendering objects behind the portal, and not cutting off the portal itself. This is done by getting the world position of the four X, Y corners of the entrance portal bounding box relative to (and scaled by) the exit camera. These corners are then projected onto the exit camera forward vector to get the near clipping distance which contain the corners within the camera frustum. The reason the entrance portal bounding box is used rather than the exit portal bounding box is because the entrance and exit meshes does not need to match each other, and you are looking through the entrance mesh, not the exit mesh.
+In `_process` the exit camera position is updated according to the main camera. The `_process` function also handles adjusting the near clipping plane of the exit camera to find a compromise between not rendering objects behind the portal, and not cutting off the portal itself. This is done by getting the world position of the four X, Y corners of the entrance portal bounding box relative to (and scaled by) the exit camera. These corners are then projected onto the exit camera forward vector to get the near clipping distance which contain the corners within the camera frustum. The reason the entrance portal bounding box is used rather than the exit portal bounding box is because the entrance and exit meshes does not need to match each other, and you are looking through the entrance mesh, not the exit mesh.
 
 ## About Modelling Portals
 
