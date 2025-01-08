@@ -1,3 +1,7 @@
+# Godot Simple Portal System
+
+![Demo screenshot](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/screenshot.png)
+
 ### Table of Contents
 
 1. **Introduction**
@@ -15,10 +19,6 @@
    - [Raycasting](#raycasting)
 4. **Feedback and Contributions**
    - [Feedback & Bug Reports](#feedback--bug-reports)
-
-# Godot Simple Portal System
-
-![Demo screenshot](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/screenshot.png)
 
 ## Description
 
