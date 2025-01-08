@@ -32,7 +32,7 @@ This simple portal system is meant as an educational example on how you can crea
 
 In essence, portals are an illusion created by placing a virtual "exit camera" behind the exit portal. This camera replicates the main player camera's relative position to the entrance portal. As a result, both the player and the exit camera view the entrance and exit portals as if they occupy the same screen space. The visuals seen by the exit camera are rendered onto a 'viewport' in Godot (a render target), which is then overlaid on the entrance portal through a screen-space shader. This gives the impression that what's in front of the exit portal is visible through the entrance portal. 
 
-We can further adjust the near clip distance of the exit camera frustum to attempt to not render objects behind the exit portal. While this won't handle all cases, it provides a simple enough solution for most scenarios. Advanced techniques such as discarding pixels of meshes behind the portal using a custom shader are also possible.
+We can further adjust the near clip distance of the exit camera frustum to attempt to not render objects behind the exit portal. While this won't handle all cases, it provides a simple enough solution for most scenarios. Advanced techniques such as discarding pixels of meshes behind the portal using a custom shader are also possible, but their implementation is dependent on the game in question.
 
 ![Portal theory](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/portals.png)
 
