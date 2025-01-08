@@ -156,10 +156,10 @@ Player (Node3D, CharacterBody3D, or RigidBody3D)
         └── portal_clone: NodePath("/Root/PlayerClone")
 
 PortalEntrance (Portal, target portal = PortalExit)
-└── Area3D (PortalTeleport) # Trigger zone for teleportation
+└── Area3D (SimplePortalTeleport or AdvancedPortalTeleport)
 
 PortalExit (Portal, target portal = PortalEntrance)
-└── Area3D (PortalTeleport) # Trigger zone for teleportation
+└── Area3D (SimplePortalTeleport or AdvancedPortalTeleport)
 
 PlayerClone (MeshInstance3D or another node tree representing the player)
 ```
