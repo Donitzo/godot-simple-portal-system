@@ -12,9 +12,8 @@
    - [Advanced Usage](#advanced-usage)
    - [Crossing a Portal](#crossing-a-portal)
    - [Teleportation](#teleportation)
-4. **Technical Details**
    - [Raycasting](#raycasting)
-5. **Feedback and Contributions**
+4. **Feedback and Contributions**
    - [Feedback & Bug Reports](#feedback--bug-reports)
 
 # Godot Simple Portal System
