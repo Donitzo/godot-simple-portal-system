@@ -151,19 +151,16 @@ The following is the hierarchy of a basic teleport example:
 ```
 Player (Node3D, CharacterBody3D, or RigidBody3D)
 └── Camera3D
-    └── TriggerArea (Area3D)
-        ├── CollisionShape3D
+    └── TriggerArea (Area3D) # Trigger area for teleportation
         └── Metadata
             ├── teleportable_root: NodePath("../..")
             └── portal_clone: NodePath("/Root/PlayerClone")
 
 PortalEntrance (Portal)
-└── Area3D (PortalTeleport)
-    └── CollisionShape3D # Trigger zone for teleportation
+└── Area3D (PortalTeleport) # Trigger zone for teleportation
 
 PortalExit (Portal)
-└── Area3D (PortalTeleport)
-    └── CollisionShape3D # Trigger zone for teleportation
+└── Area3D (PortalTeleport) # Trigger zone for teleportation
 
 PlayerClone (MeshInstance3D or another node tree representing the player)
 ```
