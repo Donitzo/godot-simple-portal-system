@@ -1,3 +1,22 @@
+### Table of Contents
+
+1. **Introduction**
+   - [Description](#description)
+   - [Theory](#theory)
+2. **Getting Started**
+   - [About the Code](#about-the-code)
+   - [About the Portal Script](#about-the-portal-script)
+   - [About Modelling Portals](#about-modelling-portals)
+   - [Setup Instructions](#setup-instructions)
+3. **Advanced Features**
+   - [Advanced Usage](#advanced-usage)
+   - [Crossing a Portal](#crossing-a-portal)
+   - [Teleportation](#teleportation)
+4. **Technical Details**
+   - [Raycasting](#raycasting)
+5. **Feedback and Contributions**
+   - [Feedback & Bug Reports](#feedback--bug-reports)
+
 # Godot Simple Portal System
 
 ![Demo screenshot](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/screenshot.png)
