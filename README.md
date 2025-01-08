@@ -146,6 +146,28 @@ Finally, if you want portals flush against surfaces (like in Portal), you may ch
 
 ![Portal clone](https://github.com/Donitzo/godot-simple-portal-system/blob/main/images/portal_demo.gif)
 
+The following is the hierarchy of a basic teleport example:
+
+```
+Player (Node3D, CharacterBody3D, or RigidBody3D)
+└── Camera3D
+    └── TriggerArea (Area3D)
+        ├── CollisionShape3D
+        └── Metadata
+            ├── teleportable_root: NodePath("../..")
+            └── portal_clone: NodePath("/Root/PlayerClone")
+
+PortalEntrance (Portal)
+└── Area3D (PortalTeleport)
+    └── CollisionShape3D # Trigger zone for teleportation
+
+PortalExit (Portal)
+└── Area3D (PortalTeleport)
+    └── CollisionShape3D # Trigger zone for teleportation
+
+PlayerClone (MeshInstance3D or another node tree representing the player)
+```
+
 ## Raycasting
 
 Raycasting through portals can be complex. To simplify this, a built-in raycasting function is provided.
