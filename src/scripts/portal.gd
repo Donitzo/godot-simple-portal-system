@@ -51,7 +51,7 @@ const _EXIT_CAMERA_NEAR_MIN:float = 0.01
 ## The exit portal. Leave unset to use this portal as an exit only.
 @export var exit_portal:Portal
 
-## An environment set for the exit camera. Leave unset to use the default environment.
+## The shader used for the portal surface.
 @export var portal_shader:Shader = preload("res://shaders/portal.gdshader")
 
 # The viewport rendering the portal surface
